@@ -3,10 +3,13 @@ import './ReCaptchaTemplate.scss';
 
 const ReCaptchaTemplate = ({
   titlePrefix = "Select all squares with",
+  titlePrefixUnderline = "",
+  titlePrefixSuffix = "",
   titleHighlight = "traffic lights", 
   subtitle = "If there are none, click skip",
   children,
   showSkip = true,
+  customButton = null,
   onSkip,
   onRefresh,
   onAudio,
@@ -15,7 +18,11 @@ const ReCaptchaTemplate = ({
   return (
     <div className="recaptcha-container">
       <div className="recaptcha-header">
-        <div className="recaptcha-title-prefix">{titlePrefix}</div>
+        <div className="recaptcha-title-prefix">
+          {titlePrefix}
+          {titlePrefixUnderline && <span className="underline">{titlePrefixUnderline}</span>}
+          {titlePrefixSuffix && titlePrefixSuffix}
+        </div>
         <div className="recaptcha-title-highlight">{titleHighlight}</div>
         <div className="recaptcha-subtitle">{subtitle}</div>
       </div>
@@ -57,16 +64,16 @@ const ReCaptchaTemplate = ({
           </button>
         </div>
         
-        {showSkip && (
-          <div className="recaptcha-toolbar-right">
+        <div className="recaptcha-toolbar-right">
+          {customButton || (showSkip && (
             <button 
               className="recaptcha-skip-btn" 
               onClick={onSkip}
             >
               SKIP
             </button>
-          </div>
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );

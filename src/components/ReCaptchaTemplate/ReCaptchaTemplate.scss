@@ -34,6 +34,10 @@ $recaptcha-shadow: rgba(0, 0, 0, 0.12);
     font-weight: 400;
     line-height: 18px;
     margin-bottom: 2px;
+    
+    .underline {
+      text-decoration: underline;
+    }
   }
   
   .recaptcha-title-highlight {
@@ -127,12 +131,35 @@ $recaptcha-shadow: rgba(0, 0, 0, 0.12);
     cursor: pointer;
     transition: background-color 0.2s ease;
     
-    &:hover {
+    &:hover:not(:disabled) {
       background: #3367d6;
     }
     
-    &:active {
+    &:active:not(:disabled) {
       background: #2954c7;
+    }
+    
+    &.disabled,
+    &:disabled {
+      background: #9aa0a6;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    
+    &.valid {
+      background: #34a853;
+      
+      &:hover {
+        background: #2d9444;
+      }
+    }
+    
+    &.invalid {
+      background: #ea4335;
+      
+      &:hover {
+        background: #d33b2c;
+      }
     }
   }
 }
@@ -145,6 +172,10 @@ $recaptcha-shadow: rgba(0, 0, 0, 0.12);
       
       .recaptcha-title-prefix {
         font-size: 13px;
+        
+        .underline {
+          text-decoration: underline;
+        }
       }
       
       .recaptcha-title-highlight {

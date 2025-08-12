@@ -1,5 +1,6 @@
 import React from 'react'
 import ReCaptchaTemplate from './components/ReCaptchaTemplate'
+import MorseCaptcha from './components/MorseCaptcha'
 import './App.css'
 
 function App() {
@@ -17,6 +18,10 @@ function App() {
 
   const handleInfo = () => {
     console.log('Info clicked')
+  }
+
+  const handleValidate = (isCorrect) => {
+    console.log('Validation result:', isCorrect)
   }
 
   return (
@@ -111,14 +116,11 @@ function App() {
           </ReCaptchaTemplate>
         </div>
 
-        {/* Exemple 4: Template crosswalks */}
+        {/* Exemple 4: Morse Captcha */}
         <div>
-          <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Template crosswalks</h3>
-          <ReCaptchaTemplate
-            titlePrefix="Click on all images with"
-            titleHighlight="crosswalks"
-            subtitle="Skip if there are none"
-            showSkip={true}
+          <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Morse Captcha</h3>
+          <MorseCaptcha
+            onValidate={handleValidate}
             onSkip={handleSkip}
             onRefresh={handleRefresh}
             onAudio={handleAudio}

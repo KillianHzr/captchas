@@ -1,0 +1,221 @@
+.morse-captcha {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  .morse-display {
+    text-align: center;
+    margin-bottom: 20px;
+
+    .word-display {
+      margin-bottom: 12px;
+      
+      .word-label {
+        font-size: 12px;
+        color: #5f6368;
+        margin-right: 8px;
+      }
+      
+      .word-text {
+        font-size: 18px;
+        font-weight: 600;
+        color: #3c4043;
+        letter-spacing: 2px;
+      }
+    }
+
+    .morse-code-display {
+      margin-bottom: 12px;
+      
+      .morse-label {
+        font-size: 12px;
+        color: #5f6368;
+        margin-right: 8px;
+      }
+      
+      .morse-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #4285f4;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 1px;
+      }
+    }
+
+    .target-info {
+      font-size: 13px;
+      color: #3c4043;
+      margin-top: 8px;
+      
+      .target-letter {
+        color: #ea4335;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .morse-only-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px;
+
+    .morse-text-large {
+      font-family: 'Courier New', monospace;
+      color: #4285f4;
+      letter-spacing: 3px;
+      text-align: center;
+      line-height: 1.2;
+      width: 100%;
+      font-size: 30px;
+      font-weight: 900;
+    }
+  }
+
+  .input-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    .letter-input {
+      width: 100%;
+      height: 40px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      background-color: #fff;
+      color: #3c4043;
+      border: 2px solid #dadce0;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s ease;
+      text-transform: uppercase;
+
+      &:focus {
+        border-color: #4285f4;
+      }
+
+      &::placeholder {
+        font-size: 12px;
+        color: #9aa0a6;
+        font-weight: normal;
+      }
+    }
+  }
+}
+
+// Indicateur mode développement
+.dev-mode-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #3c4043;
+  color: white;
+  padding: 6px 10px;
+  border: 1px solid #9aa0a6;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  z-index: 9999;
+  user-select: none;
+  pointer-events: none;
+}
+
+// Alerte de résultat
+.result-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  user-select: none;
+  
+  // Animation slide de droite vers gauche puis retour
+  animation: slideInOut 3s ease-in-out forwards;
+  
+  &.correct {
+    background: #34a853;
+  }
+  
+  &.incorrect {
+    background: #ea4335;
+  }
+}
+
+@keyframes slideInOut {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  90% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .morse-captcha {
+    padding: 15px;
+
+    .morse-display {
+      .word-text {
+        font-size: 16px;
+      }
+
+      .morse-text {
+        font-size: 14px;
+      }
+
+      .target-info {
+        font-size: 12px;
+      }
+    }
+
+    .input-section {
+      .letter-input {
+        width: 50px;
+        height: 35px;
+        font-size: 16px;
+      }
+    }
+  }
+  
+  .dev-mode-indicator {
+    bottom: 15px;
+    left: 15px;
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+  
+  .result-alert {
+    top: 15px;
+    right: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
