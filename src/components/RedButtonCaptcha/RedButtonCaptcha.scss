@@ -1,0 +1,496 @@
+.red-button-captcha {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  cursor: pointer;
+  position: relative;
+
+  .dev-hint {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    text-align: center;
+    
+    .hint-text {
+      font-size: 12px;
+      color: #ea4335;
+      font-weight: 500;
+      background: rgba(234, 67, 53, 0.1);
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(234, 67, 53, 0.2);
+    }
+  }
+
+  .captcha-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 120px;
+  }
+
+  .color-nuclear-button {
+    width: 120px;
+    height: 120px;
+    border: 6px solid;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      border: 2px solid;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    
+    &:hover {
+      transform: translateY(-2px) scale(1.05);
+    }
+    
+    &:active {
+      transform: translateY(0) scale(0.95);
+    }
+
+    // Couleur rouge
+    &.red {
+      background: linear-gradient(145deg, #ff4444, #cc0000);
+      border-color: #990000;
+      box-shadow: 
+        0 8px 20px rgba(204, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        border-color: #ff6666;
+      }
+      
+      &:hover {
+        background: linear-gradient(145deg, #ff6666, #dd0000);
+        box-shadow: 
+          0 12px 25px rgba(204, 0, 0, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      &:active {
+        background: linear-gradient(145deg, #dd0000, #aa0000);
+        box-shadow: 
+          0 4px 12px rgba(204, 0, 0, 0.6),
+          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    // Couleur bleue
+    &.blue {
+      background: linear-gradient(145deg, #4444ff, #0000cc);
+      border-color: #000099;
+      box-shadow: 
+        0 8px 20px rgba(0, 0, 204, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        border-color: #6666ff;
+      }
+      
+      &:hover {
+        background: linear-gradient(145deg, #6666ff, #0000dd);
+        box-shadow: 
+          0 12px 25px rgba(0, 0, 204, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      &:active {
+        background: linear-gradient(145deg, #0000dd, #0000aa);
+        box-shadow: 
+          0 4px 12px rgba(0, 0, 204, 0.6),
+          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    // Couleur verte
+    &.green {
+      background: linear-gradient(145deg, #44ff44, #00cc00);
+      border-color: #009900;
+      box-shadow: 
+        0 8px 20px rgba(0, 204, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        border-color: #66ff66;
+      }
+      
+      &:hover {
+        background: linear-gradient(145deg, #66ff66, #00dd00);
+        box-shadow: 
+          0 12px 25px rgba(0, 204, 0, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      &:active {
+        background: linear-gradient(145deg, #00dd00, #00aa00);
+        box-shadow: 
+          0 4px 12px rgba(0, 204, 0, 0.6),
+          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    // Couleur jaune
+    &.yellow {
+      background: linear-gradient(145deg, #ffff44, #cccc00);
+      border-color: #999900;
+      box-shadow: 
+        0 8px 20px rgba(204, 204, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        border-color: #ffff66;
+      }
+      
+      &:hover {
+        background: linear-gradient(145deg, #ffff66, #dddd00);
+        box-shadow: 
+          0 12px 25px rgba(204, 204, 0, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      &:active {
+        background: linear-gradient(145deg, #dddd00, #aaaa00);
+        box-shadow: 
+          0 4px 12px rgba(204, 204, 0, 0.6),
+          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    // Couleur violette
+    &.purple {
+      background: linear-gradient(145deg, #aa44ff, #6600cc);
+      border-color: #440099;
+      box-shadow: 
+        0 8px 20px rgba(102, 0, 204, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        border-color: #bb66ff;
+      }
+      
+      &:hover {
+        background: linear-gradient(145deg, #bb66ff, #7700dd);
+        box-shadow: 
+          0 12px 25px rgba(102, 0, 204, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      &:active {
+        background: linear-gradient(145deg, #7700dd, #5500aa);
+        box-shadow: 
+          0 4px 12px rgba(102, 0, 204, 0.6),
+          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    // Couleur orange
+    &.orange {
+      background: linear-gradient(145deg, #ff8844, #cc4400);
+      border-color: #992200;
+      box-shadow: 
+        0 8px 20px rgba(204, 68, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        border-color: #ffaa66;
+      }
+      
+      &:hover {
+        background: linear-gradient(145deg, #ffaa66, #dd5500);
+        box-shadow: 
+          0 12px 25px rgba(204, 68, 0, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      &:active {
+        background: linear-gradient(145deg, #dd5500, #aa3300);
+        box-shadow: 
+          0 4px 12px rgba(204, 68, 0, 0.6),
+          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    // Couleur rose
+    &.pink {
+      background: linear-gradient(145deg, #ff44aa, #cc0066);
+      border-color: #990044;
+      box-shadow: 
+        0 8px 20px rgba(204, 0, 102, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        border-color: #ff66bb;
+      }
+      
+      &:hover {
+        background: linear-gradient(145deg, #ff66bb, #dd0077);
+        box-shadow: 
+          0 12px 25px rgba(204, 0, 102, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      &:active {
+        background: linear-gradient(145deg, #dd0077, #aa0055);
+        box-shadow: 
+          0 4px 12px rgba(204, 0, 102, 0.6),
+          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    // Couleur cyan
+    &.cyan {
+      background: linear-gradient(145deg, #44ffff, #00cccc);
+      border-color: #009999;
+      box-shadow: 
+        0 8px 20px rgba(0, 204, 204, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        border-color: #66ffff;
+      }
+      
+      &:hover {
+        background: linear-gradient(145deg, #66ffff, #00dddd);
+        box-shadow: 
+          0 12px 25px rgba(0, 204, 204, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      &:active {
+        background: linear-gradient(145deg, #00dddd, #00aaaa);
+        box-shadow: 
+          0 4px 12px rgba(0, 204, 204, 0.6),
+          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    // Couleur lime
+    &.lime {
+      background: linear-gradient(145deg, #88ff44, #66cc00);
+      border-color: #449900;
+      box-shadow: 
+        0 8px 20px rgba(102, 204, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        border-color: #aaff66;
+      }
+      
+      &:hover {
+        background: linear-gradient(145deg, #aaff66, #77dd00);
+        box-shadow: 
+          0 12px 25px rgba(102, 204, 0, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      &:active {
+        background: linear-gradient(145deg, #77dd00, #55aa00);
+        box-shadow: 
+          0 4px 12px rgba(102, 204, 0, 0.6),
+          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    // Couleur indigo
+    &.indigo {
+      background: linear-gradient(145deg, #6644ff, #3300cc);
+      border-color: #220099;
+      box-shadow: 
+        0 8px 20px rgba(51, 0, 204, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+      
+      &::before {
+        border-color: #8866ff;
+      }
+      
+      &:hover {
+        background: linear-gradient(145deg, #8866ff, #4400dd);
+        box-shadow: 
+          0 12px 25px rgba(51, 0, 204, 0.5),
+          inset 0 2px 4px rgba(255, 255, 255, 0.3),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+      }
+      
+      &:active {
+        background: linear-gradient(145deg, #4400dd, #2200aa);
+        box-shadow: 
+          0 4px 12px rgba(51, 0, 204, 0.6),
+          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
+}
+
+// Alerte de résultat
+.result-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  user-select: none;
+  
+  animation: slideInOut 3s ease-in-out forwards;
+  
+  &.correct {
+    background: #34a853;
+  }
+  
+  &.incorrect {
+    background: #ea4335;
+  }
+}
+
+@keyframes slideInOut {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  90% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes nuclearGlow {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+    transform: scale(1);
+  }
+  100% {
+    text-shadow: 0 0 20px rgba(255, 255, 0, 0.8), 0 0 30px rgba(255, 255, 0, 0.3);
+    transform: scale(1.1);
+  }
+}
+
+// Styles pour la modal d'indice
+.red-button-hint {
+  color: #5f6368;
+  font-size: 14px;
+  line-height: 1.5;
+  
+  p {
+    margin: 0 0 12px 0;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  strong {
+    color: #3c4043;
+  }
+}
+
+// Indicateur mode développement
+.dev-mode-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #3c4043;
+  color: white;
+  padding: 6px 10px;
+  border: 1px solid #9aa0a6;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  z-index: 9999;
+  user-select: none;
+  pointer-events: none;
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .red-button-captcha {
+    padding: 15px;
+
+    .dev-hint {
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      
+      .hint-text {
+        font-size: 11px;
+        padding: 4px 8px;
+      }
+    }
+
+    .color-nuclear-button {
+      width: 100px;
+      height: 100px;
+      border-width: 4px;
+    }
+  }
+  
+  .dev-mode-indicator {
+    bottom: 15px;
+    left: 15px;
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+  
+  .result-alert {
+    top: 15px;
+    right: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
