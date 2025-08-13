@@ -9,21 +9,42 @@ const ReCaptchaTemplate = ({
   subtitle = "If there are none, click skip",
   children,
   showSkip = true,
+  showRefresh = true,
   customButton = null,
   onSkip,
   onRefresh,
   onAudio,
-  onInfo
+  onInfo,
+  onTruePhraseClick,
+  makeHighlightClickable = false
 }) => {
   return (
     <div className="recaptcha-container">
       <div className="recaptcha-header">
         <div className="recaptcha-title-prefix">
           {titlePrefix}
-          {titlePrefixUnderline && <span className="underline">{titlePrefixUnderline}</span>}
+          {titlePrefixUnderline && (
+            <span 
+              className="underline clickable-phrase" 
+              onClick={onTruePhraseClick}
+            >
+              {titlePrefixUnderline}
+            </span>
+          )}
           {titlePrefixSuffix && titlePrefixSuffix}
         </div>
-        <div className="recaptcha-title-highlight">{titleHighlight}</div>
+        <div className="recaptcha-title-highlight">
+          {makeHighlightClickable ? (
+            <span 
+              className="clickable-highlight" 
+              onClick={onTruePhraseClick}
+            >
+              {titleHighlight}
+            </span>
+          ) : (
+            titleHighlight
+          )}
+        </div>
         <div className="recaptcha-subtitle">{subtitle}</div>
       </div>
       
@@ -33,15 +54,17 @@ const ReCaptchaTemplate = ({
       
       <div className="recaptcha-toolbar">
         <div className="recaptcha-toolbar-left">
-          <button 
-            className="recaptcha-icon-btn" 
-            onClick={onRefresh}
-            title="Refresh"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24">
-              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
-            </svg>
-          </button>
+          {showRefresh && (
+            <button 
+              className="recaptcha-icon-btn" 
+              onClick={onRefresh}
+              title="Refresh"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24">
+                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+              </svg>
+            </button>
+          )}
           
           <button 
             className="recaptcha-icon-btn" 

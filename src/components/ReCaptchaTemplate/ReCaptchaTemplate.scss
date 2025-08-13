@@ -45,6 +45,19 @@ $recaptcha-shadow: rgba(0, 0, 0, 0.12);
     font-weight: 700;
     line-height: 22px;
     margin-bottom: 2px;
+    
+    .clickable-highlight {
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+      
+      &:hover {
+        opacity: 0.8;
+      }
+      
+      &:active {
+        opacity: 0.6;
+      }
+    }
   }
   
   .recaptcha-subtitle {

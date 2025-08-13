@@ -1,6 +1,7 @@
 import React from 'react'
 import ReCaptchaTemplate from './components/ReCaptchaTemplate'
 import MorseCaptcha from './components/MorseCaptcha'
+import ParadoxCaptcha from './components/ParadoxCaptcha'
 import './App.css'
 
 function App() {
@@ -120,6 +121,18 @@ function App() {
         <div>
           <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Morse Captcha</h3>
           <MorseCaptcha
+            onValidate={handleValidate}
+            onSkip={handleSkip}
+            onRefresh={handleRefresh}
+            onAudio={handleAudio}
+            onInfo={handleInfo}
+          />
+        </div>
+
+        {/* Exemple 5: Paradox Captcha */}
+        <div>
+          <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Paradox Captcha</h3>
+          <ParadoxCaptcha
             onValidate={handleValidate}
             onSkip={handleSkip}
             onRefresh={handleRefresh}
