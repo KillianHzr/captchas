@@ -41,7 +41,7 @@
   .color-nuclear-button {
     width: 120px;
     height: 120px;
-    border: 6px solid;
+    border: 3px solid;
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -49,316 +49,182 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      right: 8px;
-      bottom: 8px;
-      border: 2px solid;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0.6;
-    }
     
     &:hover {
-      transform: translateY(-2px) scale(1.05);
+      transform: scale(1.05);
     }
     
     &:active {
-      transform: translateY(0) scale(0.95);
+      transform: scale(0.95);
     }
 
     // Couleur rouge
     &.red {
-      background: linear-gradient(145deg, #ff4444, #cc0000);
-      border-color: #990000;
-      box-shadow: 
-        0 8px 20px rgba(204, 0, 0, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-      
-      &::before {
-        border-color: #ff6666;
-      }
+      background: #e53e3e;
+      border-color: #c53030;
+      box-shadow: 0 4px 12px rgba(197, 48, 48, 0.3);
       
       &:hover {
-        background: linear-gradient(145deg, #ff6666, #dd0000);
-        box-shadow: 
-          0 12px 25px rgba(204, 0, 0, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        background: #f56565;
+        box-shadow: 0 6px 16px rgba(197, 48, 48, 0.4);
       }
       
       &:active {
-        background: linear-gradient(145deg, #dd0000, #aa0000);
-        box-shadow: 
-          0 4px 12px rgba(204, 0, 0, 0.6),
-          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        background: #c53030;
+        box-shadow: 0 2px 8px rgba(197, 48, 48, 0.5);
       }
     }
 
     // Couleur bleue
     &.blue {
-      background: linear-gradient(145deg, #4444ff, #0000cc);
-      border-color: #000099;
-      box-shadow: 
-        0 8px 20px rgba(0, 0, 204, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-      
-      &::before {
-        border-color: #6666ff;
-      }
+      background: #3182ce;
+      border-color: #2c5aa0;
+      box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
       
       &:hover {
-        background: linear-gradient(145deg, #6666ff, #0000dd);
-        box-shadow: 
-          0 12px 25px rgba(0, 0, 204, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        background: #4299e1;
+        box-shadow: 0 6px 16px rgba(44, 90, 160, 0.4);
       }
       
       &:active {
-        background: linear-gradient(145deg, #0000dd, #0000aa);
-        box-shadow: 
-          0 4px 12px rgba(0, 0, 204, 0.6),
-          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        background: #2c5aa0;
+        box-shadow: 0 2px 8px rgba(44, 90, 160, 0.5);
       }
     }
 
     // Couleur verte
     &.green {
-      background: linear-gradient(145deg, #44ff44, #00cc00);
-      border-color: #009900;
-      box-shadow: 
-        0 8px 20px rgba(0, 204, 0, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-      
-      &::before {
-        border-color: #66ff66;
-      }
+      background: #38a169;
+      border-color: #2f855a;
+      box-shadow: 0 4px 12px rgba(47, 133, 90, 0.3);
       
       &:hover {
-        background: linear-gradient(145deg, #66ff66, #00dd00);
-        box-shadow: 
-          0 12px 25px rgba(0, 204, 0, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        background: #48bb78;
+        box-shadow: 0 6px 16px rgba(47, 133, 90, 0.4);
       }
       
       &:active {
-        background: linear-gradient(145deg, #00dd00, #00aa00);
-        box-shadow: 
-          0 4px 12px rgba(0, 204, 0, 0.6),
-          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        background: #2f855a;
+        box-shadow: 0 2px 8px rgba(47, 133, 90, 0.5);
       }
     }
 
     // Couleur jaune
     &.yellow {
-      background: linear-gradient(145deg, #ffff44, #cccc00);
-      border-color: #999900;
-      box-shadow: 
-        0 8px 20px rgba(204, 204, 0, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-      
-      &::before {
-        border-color: #ffff66;
-      }
+      background: #d69e2e;
+      border-color: #b7791f;
+      box-shadow: 0 4px 12px rgba(183, 121, 31, 0.3);
       
       &:hover {
-        background: linear-gradient(145deg, #ffff66, #dddd00);
-        box-shadow: 
-          0 12px 25px rgba(204, 204, 0, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        background: #ecc94b;
+        box-shadow: 0 6px 16px rgba(183, 121, 31, 0.4);
       }
       
       &:active {
-        background: linear-gradient(145deg, #dddd00, #aaaa00);
-        box-shadow: 
-          0 4px 12px rgba(204, 204, 0, 0.6),
-          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        background: #b7791f;
+        box-shadow: 0 2px 8px rgba(183, 121, 31, 0.5);
       }
     }
 
     // Couleur violette
     &.purple {
-      background: linear-gradient(145deg, #aa44ff, #6600cc);
-      border-color: #440099;
-      box-shadow: 
-        0 8px 20px rgba(102, 0, 204, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-      
-      &::before {
-        border-color: #bb66ff;
-      }
+      background: #805ad5;
+      border-color: #6b46c1;
+      box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
       
       &:hover {
-        background: linear-gradient(145deg, #bb66ff, #7700dd);
-        box-shadow: 
-          0 12px 25px rgba(102, 0, 204, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        background: #9f7aea;
+        box-shadow: 0 6px 16px rgba(107, 70, 193, 0.4);
       }
       
       &:active {
-        background: linear-gradient(145deg, #7700dd, #5500aa);
-        box-shadow: 
-          0 4px 12px rgba(102, 0, 204, 0.6),
-          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        background: #6b46c1;
+        box-shadow: 0 2px 8px rgba(107, 70, 193, 0.5);
       }
     }
 
     // Couleur orange
     &.orange {
-      background: linear-gradient(145deg, #ff8844, #cc4400);
-      border-color: #992200;
-      box-shadow: 
-        0 8px 20px rgba(204, 68, 0, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-      
-      &::before {
-        border-color: #ffaa66;
-      }
+      background: #dd6b20;
+      border-color: #c05621;
+      box-shadow: 0 4px 12px rgba(192, 86, 33, 0.3);
       
       &:hover {
-        background: linear-gradient(145deg, #ffaa66, #dd5500);
-        box-shadow: 
-          0 12px 25px rgba(204, 68, 0, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        background: #ed8936;
+        box-shadow: 0 6px 16px rgba(192, 86, 33, 0.4);
       }
       
       &:active {
-        background: linear-gradient(145deg, #dd5500, #aa3300);
-        box-shadow: 
-          0 4px 12px rgba(204, 68, 0, 0.6),
-          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        background: #c05621;
+        box-shadow: 0 2px 8px rgba(192, 86, 33, 0.5);
       }
     }
 
     // Couleur rose
     &.pink {
-      background: linear-gradient(145deg, #ff44aa, #cc0066);
-      border-color: #990044;
-      box-shadow: 
-        0 8px 20px rgba(204, 0, 102, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-      
-      &::before {
-        border-color: #ff66bb;
-      }
+      background: #d53f8c;
+      border-color: #b83280;
+      box-shadow: 0 4px 12px rgba(184, 50, 128, 0.3);
       
       &:hover {
-        background: linear-gradient(145deg, #ff66bb, #dd0077);
-        box-shadow: 
-          0 12px 25px rgba(204, 0, 102, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        background: #ed64a6;
+        box-shadow: 0 6px 16px rgba(184, 50, 128, 0.4);
       }
       
       &:active {
-        background: linear-gradient(145deg, #dd0077, #aa0055);
-        box-shadow: 
-          0 4px 12px rgba(204, 0, 102, 0.6),
-          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        background: #b83280;
+        box-shadow: 0 2px 8px rgba(184, 50, 128, 0.5);
       }
     }
 
     // Couleur cyan
     &.cyan {
-      background: linear-gradient(145deg, #44ffff, #00cccc);
-      border-color: #009999;
-      box-shadow: 
-        0 8px 20px rgba(0, 204, 204, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-      
-      &::before {
-        border-color: #66ffff;
-      }
+      background: #0bc5ea;
+      border-color: #00a3c4;
+      box-shadow: 0 4px 12px rgba(0, 163, 196, 0.3);
       
       &:hover {
-        background: linear-gradient(145deg, #66ffff, #00dddd);
-        box-shadow: 
-          0 12px 25px rgba(0, 204, 204, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        background: #0dd8f0;
+        box-shadow: 0 6px 16px rgba(0, 163, 196, 0.4);
       }
       
       &:active {
-        background: linear-gradient(145deg, #00dddd, #00aaaa);
-        box-shadow: 
-          0 4px 12px rgba(0, 204, 204, 0.6),
-          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        background: #00a3c4;
+        box-shadow: 0 2px 8px rgba(0, 163, 196, 0.5);
       }
     }
 
     // Couleur lime
     &.lime {
-      background: linear-gradient(145deg, #88ff44, #66cc00);
-      border-color: #449900;
-      box-shadow: 
-        0 8px 20px rgba(102, 204, 0, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-      
-      &::before {
-        border-color: #aaff66;
-      }
+      background: #84cc16;
+      border-color: #65a30d;
+      box-shadow: 0 4px 12px rgba(101, 163, 13, 0.3);
       
       &:hover {
-        background: linear-gradient(145deg, #aaff66, #77dd00);
-        box-shadow: 
-          0 12px 25px rgba(102, 204, 0, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        background: #a3e635;
+        box-shadow: 0 6px 16px rgba(101, 163, 13, 0.4);
       }
       
       &:active {
-        background: linear-gradient(145deg, #77dd00, #55aa00);
-        box-shadow: 
-          0 4px 12px rgba(102, 204, 0, 0.6),
-          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        background: #65a30d;
+        box-shadow: 0 2px 8px rgba(101, 163, 13, 0.5);
       }
     }
 
     // Couleur indigo
     &.indigo {
-      background: linear-gradient(145deg, #6644ff, #3300cc);
-      border-color: #220099;
-      box-shadow: 
-        0 8px 20px rgba(51, 0, 204, 0.4),
-        inset 0 2px 4px rgba(255, 255, 255, 0.2),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-      
-      &::before {
-        border-color: #8866ff;
-      }
+      background: #4f46e5;
+      border-color: #4338ca;
+      box-shadow: 0 4px 12px rgba(67, 56, 202, 0.3);
       
       &:hover {
-        background: linear-gradient(145deg, #8866ff, #4400dd);
-        box-shadow: 
-          0 12px 25px rgba(51, 0, 204, 0.5),
-          inset 0 2px 4px rgba(255, 255, 255, 0.3),
-          inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        background: #6366f1;
+        box-shadow: 0 6px 16px rgba(67, 56, 202, 0.4);
       }
       
       &:active {
-        background: linear-gradient(145deg, #4400dd, #2200aa);
-        box-shadow: 
-          0 4px 12px rgba(51, 0, 204, 0.6),
-          inset 0 2px 6px rgba(0, 0, 0, 0.4);
+        background: #4338ca;
+        box-shadow: 0 2px 8px rgba(67, 56, 202, 0.5);
       }
     }
   }
@@ -476,7 +342,7 @@
     .color-nuclear-button {
       width: 100px;
       height: 100px;
-      border-width: 4px;
+      border-width: 2px;
     }
   }
   

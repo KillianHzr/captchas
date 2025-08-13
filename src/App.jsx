@@ -4,6 +4,8 @@ import MorseCaptcha from './components/MorseCaptcha'
 import ParadoxCaptcha from './components/ParadoxCaptcha'
 import PatienceCaptcha from './components/PatienceCaptcha'
 import RedButtonCaptcha from './components/RedButtonCaptcha'
+import HangmanCaptcha from './components/HangmanCaptcha'
+import WordleCaptcha from './components/WordleCaptcha'
 import './App.css'
 
 function App() {
@@ -159,6 +161,30 @@ function App() {
         <div>
           <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Red Button Captcha</h3>
           <RedButtonCaptcha
+            onValidate={handleValidate}
+            onSkip={handleSkip}
+            onRefresh={handleRefresh}
+            onAudio={handleAudio}
+            onInfo={handleInfo}
+          />
+        </div>
+
+        {/* Exemple 8: Hangman Captcha */}
+        <div>
+          <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Hangman Captcha</h3>
+          <HangmanCaptcha
+            onValidate={handleValidate}
+            onSkip={handleSkip}
+            onRefresh={handleRefresh}
+            onAudio={handleAudio}
+            onInfo={handleInfo}
+          />
+        </div>
+
+        {/* Exemple 9: Wordle Captcha */}
+        <div>
+          <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Wordle Captcha</h3>
+          <WordleCaptcha
             onValidate={handleValidate}
             onSkip={handleSkip}
             onRefresh={handleRefresh}
