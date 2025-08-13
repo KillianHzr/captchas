@@ -2,6 +2,7 @@ import React from 'react'
 import ReCaptchaTemplate from './components/ReCaptchaTemplate'
 import MorseCaptcha from './components/MorseCaptcha'
 import ParadoxCaptcha from './components/ParadoxCaptcha'
+import PatienceCaptcha from './components/PatienceCaptcha'
 import './App.css'
 
 function App() {
@@ -133,6 +134,18 @@ function App() {
         <div>
           <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Paradox Captcha</h3>
           <ParadoxCaptcha
+            onValidate={handleValidate}
+            onSkip={handleSkip}
+            onRefresh={handleRefresh}
+            onAudio={handleAudio}
+            onInfo={handleInfo}
+          />
+        </div>
+
+        {/* Exemple 6: Patience Captcha */}
+        <div>
+          <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Patience Captcha</h3>
+          <PatienceCaptcha
             onValidate={handleValidate}
             onSkip={handleSkip}
             onRefresh={handleRefresh}

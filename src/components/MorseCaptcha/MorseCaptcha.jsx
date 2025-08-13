@@ -132,7 +132,7 @@ const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
         titlePrefix="Type the "
         titlePrefixUnderline={`${getOrdinal(targetLetterIndex)} letter`}
         titlePrefixSuffix=" of the word in"
-        titleHighlight="Morse code"
+        titleHighlight="morse code"
         subtitle="Enter the corresponding letter below"
         showSkip={false}
         customButton={customButton}

@@ -1,0 +1,172 @@
+.patience-captcha {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  .dev-countdown {
+    margin-bottom: 16px;
+    text-align: center;
+    
+    .countdown-label {
+      font-size: 12px;
+      color: #5f6368;
+      margin-right: 8px;
+    }
+    
+    .countdown-time {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ea4335;
+      min-width: 30px;
+      display: inline-block;
+    }
+  }
+
+  .blurred-message-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 120px;
+  }
+
+  .blurred-message {
+    font-size: 16px;
+    font-weight: 500;
+    color: #3c4043;
+    text-align: center;
+    line-height: 1.4;
+    padding: 20px;
+    max-width: 280px;
+    user-select: none;
+    pointer-events: none;
+  }
+}
+
+// Alerte de résultat
+.result-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  user-select: none;
+  
+  animation: slideInOut 3s ease-in-out forwards;
+  
+  &.correct {
+    background: #34a853;
+  }
+  
+  &.incorrect {
+    background: #ea4335;
+  }
+}
+
+@keyframes slideInOut {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  90% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+// Styles pour la modal d'indice
+.patience-hint {
+  color: #5f6368;
+  font-size: 14px;
+  line-height: 1.5;
+  
+  p {
+    margin: 0 0 12px 0;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  strong {
+    color: #3c4043;
+  }
+}
+
+// Indicateur mode développement
+.dev-mode-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #3c4043;
+  color: white;
+  padding: 6px 10px;
+  border: 1px solid #9aa0a6;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  z-index: 9999;
+  user-select: none;
+  pointer-events: none;
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .patience-captcha {
+    padding: 15px;
+
+    .dev-countdown {
+      margin-bottom: 12px;
+      
+      .countdown-label {
+        font-size: 11px;
+      }
+      
+      .countdown-time {
+        font-size: 16px;
+      }
+    }
+
+    .blurred-message {
+      font-size: 14px;
+      padding: 15px;
+      max-width: 220px;
+    }
+  }
+  
+  .dev-mode-indicator {
+    bottom: 15px;
+    left: 15px;
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+  
+  .result-alert {
+    top: 15px;
+    right: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+}
