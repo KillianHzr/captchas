@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReCaptchaTemplate from '../ReCaptchaTemplate';
+import InfoModal from '../InfoModal';
 import './MorseCaptcha.scss';
 
 const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
@@ -10,6 +11,7 @@ const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
   const [isValid, setIsValid] = useState(false);
   const [isDevMode, setIsDevMode] = useState(false);
   const [showAlert, setShowAlert] = useState({ show: false, isCorrect: false });
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   // Dictionnaire morse
   const morseDict = {
@@ -63,12 +65,16 @@ const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
 
   // Gestion de l'input utilisateur
   const handleInputChange = (e) => {
-    const value = e.target.value.toUpperCase().replace(/[^A-Z]/g, '');
-    if (value.length <= 1) {
-      setUserInput(value);
-      const targetLetter = currentWord[targetLetterIndex];
-      setIsValid(value === targetLetter);
+    let value = e.target.value.toUpperCase().replace(/[^A-Z]/g, '');
+    
+    // Si on a plus d'un caractère, garder seulement le dernier
+    if (value.length > 1) {
+      value = value.slice(-1);
     }
+    
+    setUserInput(value);
+    const targetLetter = currentWord[targetLetterIndex];
+    setIsValid(value === targetLetter);
   };
 
   // Gestion de la touche Enter
@@ -95,6 +101,12 @@ const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
   const handleRefresh = () => {
     generateChallenge();
     if (onRefresh) onRefresh();
+  };
+
+  // Gestion de l'info modal
+  const handleInfo = () => {
+    setShowInfoModal(true);
+    if (onInfo) onInfo();
   };
 
   // Position ordinale
@@ -127,7 +139,7 @@ const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
         onSkip={onSkip}
         onRefresh={handleRefresh}
         onAudio={onAudio}
-        onInfo={onInfo}
+        onInfo={handleInfo}
       >
         <div className="morse-captcha">
           {isDevMode ? (
@@ -161,7 +173,6 @@ const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
               onKeyDown={handleKeyDown}
               placeholder="Type letter..."
               className="letter-input"
-              maxLength="1"
             />
           </div>
         </div>
@@ -178,6 +189,31 @@ const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
           {showAlert.isCorrect ? '✓ Correct!' : '✗ Wrong!'}
         </div>
       )}
+      
+      <InfoModal
+        isOpen={showInfoModal}
+        onClose={() => setShowInfoModal(false)}
+        title="Morse Code Reference"
+      >
+        <div className="morse-alphabet">
+          <div className="morse-info">
+            <p><strong>How to read Morse code:</strong></p>
+            <ul>
+              <li><strong>Dot (·)</strong> - Short signal</li>
+              <li><strong>Dash (−)</strong> - Long signal</li>
+              <li>Each letter is separated by a space</li>
+            </ul>
+          </div>
+          <div className="morse-alphabet-grid">
+            {Object.entries(morseDict).map(([letter, morse]) => (
+              <div key={letter} className="morse-alphabet-item">
+                <span className="morse-letter">{letter}</span>
+                <span className="morse-code">{morse}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </InfoModal>
     </>
   );
 };

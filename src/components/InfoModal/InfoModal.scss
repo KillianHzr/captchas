@@ -1,0 +1,141 @@
+// Variables reCAPTCHA
+$recaptcha-blue: #4285f4;
+$recaptcha-border: #dadce0;
+$recaptcha-text: #3c4043;
+$recaptcha-subtitle: #5f6368;
+$recaptcha-bg: #ffffff;
+$recaptcha-shadow: rgba(0, 0, 0, 0.12);
+
+.info-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.info-modal {
+  background: $recaptcha-bg;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  animation: slideIn 0.2s ease-in-out;
+  
+  @media (max-width: 768px) {
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.info-modal-header {
+  background: $recaptcha-blue;
+  color: white;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .info-modal-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .info-modal-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    &:active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    svg {
+      fill: currentColor;
+    }
+  }
+}
+
+.info-modal-content {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: calc(80vh - 120px);
+  
+  @media (max-width: 768px) {
+    padding: 16px;
+    max-height: calc(90vh - 120px);
+  }
+}
+
+.info-modal-footer {
+  padding: 16px 20px;
+  border-top: 1px solid $recaptcha-border;
+  display: flex;
+  justify-content: flex-end;
+  
+  @media (max-width: 768px) {
+    padding: 12px 16px;
+  }
+  
+  .info-modal-ok-btn {
+    background: $recaptcha-blue;
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background: #3367d6;
+    }
+    
+    &:active {
+      background: #2954c7;
+    }
+  }
+}

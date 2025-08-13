@@ -219,3 +219,69 @@
     font-size: 13px;
   }
 }
+
+// Styles pour la modal d'alphabet morse
+.morse-alphabet {
+  .morse-alphabet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    
+    @media (max-width: 480px) {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px;
+    }
+  }
+  
+  .morse-alphabet-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    
+    .morse-letter {
+      font-size: 16px;
+      font-weight: 600;
+      color: #3c4043;
+    }
+    
+    .morse-code {
+      font-family: 'Courier New', monospace;
+      font-size: 24px;
+      font-weight: 900;
+      color: #4285f4;
+      letter-spacing: 1px;
+    }
+  }
+  
+  .morse-info {
+    color: #5f6368;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    
+    p {
+      margin: 0 0 12px 0;
+    }
+    
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      
+      li {
+        margin-bottom: 6px;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    
+    strong {
+      color: #3c4043;
+    }
+  }
+}
