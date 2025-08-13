@@ -2,31 +2,33 @@ import React from 'react';
 import './InfoModal.scss';
 
 const InfoModal = ({ isOpen, onClose, title, children }) => {
-  if (!isOpen) return null;
-
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = React.useCallback((e) => {
     if (e.key === 'Escape') {
       onClose();
     }
-  };
+  }, [onClose]);
 
   React.useEffect(() => {
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
     }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen]);
+  }, [isOpen, handleKeyDown]);
+
+  if (!isOpen) return null;
 
   return (
     <div className="info-modal-overlay" onClick={handleOverlayClick}>
