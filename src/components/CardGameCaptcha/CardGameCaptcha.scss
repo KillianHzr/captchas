@@ -1,0 +1,257 @@
+.card-game-captcha {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  .dev-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 1000;
+    
+    .dev-label {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    
+    .dev-text {
+      margin-right: 15px;
+      color: #00ff00;
+    }
+  }
+  
+  .memory-timer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 120px;
+    font-weight: bold;
+    color: #ff4444;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    animation: pulse 1s infinite;
+    
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+  }
+  
+  .cards-container {
+    position: relative;
+    width: calc(80% - 60px);
+    height: 100%;
+    margin: auto;
+    padding: 20px 60px;
+  }
+  
+  .card {
+    position: absolute;
+    width: 15%;
+    height: auto;
+    aspect-ratio: 2/3;
+    cursor: pointer;
+    perspective: 1000px;
+    user-select: none;
+    
+    &.hidden .card-inner {
+      transform: rotateY(180deg);
+    }
+    
+    &.selected {
+      transform: scale(1.05) !important;
+    }
+    
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      border: 2px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-front {
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      
+      .card-symbol {
+        font-size: 32px;
+        font-weight: bold;
+        color: #333;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      }
+    }
+    
+    .card-back {
+      background: linear-gradient(145deg, #4a90e2, #357abd);
+      transform: rotateY(180deg);
+      
+      .card-pattern {
+        width: 60px;
+        height: 80px;
+        background: repeating-linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.1) 4px,
+          transparent 4px,
+          transparent 8px
+        );
+        border-radius: 4px;
+      }
+    }
+    
+    // Hover effect seulement quand on peut cliquer
+    &:hover {
+      .card-inner {
+        transform: translateY(-2px);
+      }
+    }
+    
+    // Disabled state pendant le mélange
+    &.disabled {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+  
+  .game-result {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    
+    &.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 480px) {
+  .card-game-captcha {
+    .cards-container {
+      width: 320px;
+      height: 380px;
+      transform: scale(0.85);
+    }
+    
+    .card {
+      width: 70px;
+      height: 100px;
+      
+      .card-symbol {
+        font-size: 28px;
+      }
+    }
+  }
+}
+
+// Dev mode indicator (réutilisé des autres captchas)
+.dev-mode-indicator {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #ff0000;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  z-index: 9999;
+}
+
+// Alert de résultat (réutilisé des autres captchas)
+.result-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 40px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 10000;
+  animation: alertFadeIn 0.3s ease-out;
+  
+  &.correct {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+  }
+  
+  &.incorrect {
+    background: #f8d7da;
+    color: #721c24;
+    border: 2px solid #f5c6cb;
+  }
+  
+  @keyframes alertFadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+}
+
+// Hint modal styling
+.card-game-hint {
+  p {
+    margin-bottom: 15px;
+    
+    strong {
+      color: #333;
+    }
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    
+    li {
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      &:before {
+        content: "• ";
+        color: #4a90e2;
+        font-weight: bold;
+      }
+    }
+  }
+}
