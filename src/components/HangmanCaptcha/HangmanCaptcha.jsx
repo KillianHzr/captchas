@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReCaptchaTemplate from '../ReCaptchaTemplate';
 import InfoModal from '../InfoModal';
+import useCaptchaState from '../../hooks/useCaptchaState';
 import './HangmanCaptcha.scss';
 
 const HangmanCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
+  const { isDevMode, triggerValidation, AlertComponent, DevModeIndicator } = useCaptchaState(onValidate);
   const [currentWord, setCurrentWord] = useState('');
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [wrongLetters, setWrongLetters] = useState([]);
   const [userInput, setUserInput] = useState('');
   const [gameStatus, setGameStatus] = useState('playing'); // 'playing', 'won', 'lost'
-  const [showAlert, setShowAlert] = useState({ show: false, isCorrect: false });
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [isDevMode, setIsDevMode] = useState(false);
 
   // Liste de mots pour le pendu
   const wordList = [
@@ -27,11 +27,6 @@ const HangmanCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
 
   const maxErrors = 5;
 
-  // Détection du mode dev
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setIsDevMode(urlParams.get('devMode') === 'velvet');
-  }, []);
 
   // Génération d'un nouveau mot
   const generateNewWord = useCallback(() => {
@@ -93,14 +88,7 @@ const HangmanCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
       // Vérifier si le mot est complet
       if (currentWord.split('').every(l => newGuessedLetters.includes(l))) {
         setGameStatus('won');
-        setShowAlert({ show: true, isCorrect: true });
-        setTimeout(() => {
-          setShowAlert({ show: false, isCorrect: false });
-        }, 3000);
-        
-        if (onValidate) {
-          onValidate(true);
-        }
+        triggerValidation(true);
       }
     } else {
       // Mauvaise lettre
@@ -110,14 +98,7 @@ const HangmanCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
       // Vérifier si trop d'erreurs
       if (newWrongLetters.length >= maxErrors) {
         setGameStatus('lost');
-        setShowAlert({ show: true, isCorrect: false });
-        setTimeout(() => {
-          setShowAlert({ show: false, isCorrect: false });
-        }, 3000);
-        
-        if (onValidate) {
-          onValidate(false);
-        }
+        triggerValidation(false);
       }
     }
     
@@ -227,17 +208,8 @@ const HangmanCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
         </div>
       </ReCaptchaTemplate>
       
-      {isDevMode && (
-        <div className="dev-mode-indicator">
-          DEV
-        </div>
-      )}
-      
-      {showAlert.show && (
-        <div className={`result-alert ${showAlert.isCorrect ? 'correct' : 'incorrect'}`}>
-          {showAlert.isCorrect ? '✓ Correct!' : '✗ Wrong!'}
-        </div>
-      )}
+      {DevModeIndicator}
+      {AlertComponent}
       
       <InfoModal
         isOpen={showInfoModal}

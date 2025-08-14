@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReCaptchaTemplate from '../ReCaptchaTemplate';
 import InfoModal from '../InfoModal';
+import useCaptchaState from '../../hooks/useCaptchaState';
 import './DesktopCleanupCaptcha.scss';
 
 const DesktopCleanupCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
-  const [showAlert, setShowAlert] = useState({ show: false, isCorrect: false });
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [isDevMode, setIsDevMode] = useState(false);
+  const { isDevMode, triggerValidation, AlertComponent, DevModeIndicator } = useCaptchaState(onValidate);
   const [desktopItems, setDesktopItems] = useState([]);
   const [trashItems, setTrashItems] = useState([]);
   const [draggedItem, setDraggedItem] = useState(null);
@@ -65,11 +65,6 @@ const DesktopCleanupCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo 
     setGameCompleted(false);
   }, []);
 
-  // Détection du mode dev
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setIsDevMode(urlParams.get('devMode') === 'velvet');
-  }, []);
 
   // Initialisation
   useEffect(() => {
@@ -80,16 +75,9 @@ const DesktopCleanupCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo 
   useEffect(() => {
     if (desktopItems.length === 0 && trashItems.length > 0 && !gameCompleted) {
       setGameCompleted(true);
-      setShowAlert({ show: true, isCorrect: true });
-      setTimeout(() => {
-        setShowAlert({ show: false, isCorrect: false });
-      }, 3000);
-      
-      if (onValidate) {
-        onValidate(true);
-      }
+      triggerValidation(true);
     }
-  }, [desktopItems.length, trashItems.length, gameCompleted, onValidate]);
+  }, [desktopItems.length, trashItems.length, gameCompleted, triggerValidation]);
 
   // Gestion du drag start
   const handleDragStart = (e, item) => {
@@ -263,17 +251,9 @@ const DesktopCleanupCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo 
         </div>
       </ReCaptchaTemplate>
       
-      {isDevMode && (
-        <div className="dev-mode-indicator">
-          DEV
-        </div>
-      )}
+      {DevModeIndicator}
       
-      {showAlert.show && (
-        <div className={`result-alert ${showAlert.isCorrect ? 'correct' : 'incorrect'}`}>
-          {showAlert.isCorrect ? '✓ Correct!' : '✗ Wrong!'}
-        </div>
-      )}
+      {AlertComponent}
       
       <InfoModal
         isOpen={showInfoModal}

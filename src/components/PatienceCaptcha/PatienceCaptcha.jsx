@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReCaptchaTemplate from '../ReCaptchaTemplate';
 import InfoModal from '../InfoModal';
+import useCaptchaState from '../../hooks/useCaptchaState';
 import './PatienceCaptcha.scss';
 
 const PatienceCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
   const [blurLevel, setBlurLevel] = useState(15); // Niveau de flou initial (15px = 75%)
   const [isDeblurred, setIsDeblurred] = useState(false);
-  const [showAlert, setShowAlert] = useState({ show: false, isCorrect: false });
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [isDevMode, setIsDevMode] = useState(false);
+  const { isDevMode, triggerValidation, AlertComponent, DevModeIndicator } = useCaptchaState(onValidate);
   const [countdown, setCountdown] = useState(0);
   
   const intervalRef = useRef(null);
@@ -16,11 +16,6 @@ const PatienceCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
 
   const hiddenMessage = "Wait patiently without moving until this text becomes clear";
 
-  // Détection du mode dev
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setIsDevMode(urlParams.get('devMode') === 'velvet');
-  }, []);
 
   // Démarrer le processus de déflouage
   const startDeblurring = useCallback(() => {
@@ -107,14 +102,7 @@ const PatienceCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
   // Gestion de la validation
   const handleValidate = () => {
     if (isDeblurred) {
-      setShowAlert({ show: true, isCorrect: true });
-      setTimeout(() => {
-        setShowAlert({ show: false, isCorrect: false });
-      }, 3000);
-      
-      if (onValidate) {
-        onValidate(true);
-      }
+      triggerValidation(true);
     }
   };
 
@@ -212,17 +200,9 @@ const PatienceCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
         </div>
       </ReCaptchaTemplate>
       
-      {isDevMode && (
-        <div className="dev-mode-indicator">
-          DEV
-        </div>
-      )}
+      {DevModeIndicator}
       
-      {showAlert.show && (
-        <div className={`result-alert ${showAlert.isCorrect ? 'correct' : 'incorrect'}`}>
-          {showAlert.isCorrect ? '✓ Correct!' : '✗ Wrong!'}
-        </div>
-      )}
+      {AlertComponent}
       
       <InfoModal
         isOpen={showInfoModal}

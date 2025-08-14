@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import ReCaptchaTemplate from '../ReCaptchaTemplate';
 import InfoModal from '../InfoModal';
+import useCaptchaState from '../../hooks/useCaptchaState';
 import './MorseCaptcha.scss';
 
 const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
+  const { isDevMode, triggerValidation, AlertComponent, DevModeIndicator } = useCaptchaState(onValidate);
   const [currentWord, setCurrentWord] = useState('');
   const [targetLetterIndex, setTargetLetterIndex] = useState(0);
   const [morseCode, setMorseCode] = useState('');
   const [userInput, setUserInput] = useState('');
   const [isValid, setIsValid] = useState(false);
-  const [isDevMode, setIsDevMode] = useState(false);
-  const [showAlert, setShowAlert] = useState({ show: false, isCorrect: false });
   const [showInfoModal, setShowInfoModal] = useState(false);
 
   // Dictionnaire morse
@@ -52,11 +52,6 @@ const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
     setIsValid(false);
   };
 
-  // Détection du mode dev
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setIsDevMode(urlParams.get('devMode') === 'velvet');
-  }, []);
 
   // Initialisation
   useEffect(() => {
@@ -86,15 +81,7 @@ const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
 
   // Gestion de la validation
   const handleValidate = () => {
-    setShowAlert({ show: true, isCorrect: isValid });
-    // Masquer l'alerte après 3 secondes
-    setTimeout(() => {
-      setShowAlert({ show: false, isCorrect: false });
-    }, 3000);
-    
-    if (onValidate) {
-      onValidate(isValid);
-    }
+    triggerValidation(isValid);
   };
 
   // Gestion du refresh
@@ -178,17 +165,8 @@ const MorseCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
         </div>
       </ReCaptchaTemplate>
       
-      {isDevMode && (
-        <div className="dev-mode-indicator">
-          DEV
-        </div>
-      )}
-      
-      {showAlert.show && (
-        <div className={`result-alert ${showAlert.isCorrect ? 'correct' : 'incorrect'}`}>
-          {showAlert.isCorrect ? '✓ Correct!' : '✗ Wrong!'}
-        </div>
-      )}
+      {DevModeIndicator}
+      {AlertComponent}
       
       <InfoModal
         isOpen={showInfoModal}

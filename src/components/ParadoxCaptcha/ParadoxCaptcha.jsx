@@ -1,36 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import ReCaptchaTemplate from '../ReCaptchaTemplate';
 import InfoModal from '../InfoModal';
+import useCaptchaState from '../../hooks/useCaptchaState';
 import './ParadoxCaptcha.scss';
 
 const ParadoxCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
   const [isValid, setIsValid] = useState(false);
-  const [showAlert, setShowAlert] = useState({ show: false, isCorrect: false });
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const { isDevMode, triggerValidation, AlertComponent, DevModeIndicator } = useCaptchaState(onValidate);
 
   // Gestion du clic sur les phrases du paradoxe
   const handleParadoxClick = () => {
-    setShowAlert({ show: true, isCorrect: false });
-    setTimeout(() => {
-      setShowAlert({ show: false, isCorrect: false });
-    }, 3000);
-    
-    if (onValidate) {
-      onValidate(false);
-    }
+    triggerValidation(false);
   };
 
   // Gestion du clic sur "la phrase vraie" dans la consigne
   const handleTruePhraseClick = () => {
     setIsValid(true);
-    setShowAlert({ show: true, isCorrect: true });
-    setTimeout(() => {
-      setShowAlert({ show: false, isCorrect: false });
-    }, 3000);
-    
-    if (onValidate) {
-      onValidate(true);
-    }
+    triggerValidation(true);
   };
 
   // Gestion de l'info modal
@@ -76,11 +63,9 @@ const ParadoxCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
         </div>
       </ReCaptchaTemplate>
       
-      {showAlert.show && (
-        <div className={`result-alert ${showAlert.isCorrect ? 'correct' : 'incorrect'}`}>
-          {showAlert.isCorrect ? '✓ Correct!' : '✗ Wrong!'}
-        </div>
-      )}
+      {DevModeIndicator}
+      
+      {AlertComponent}
       
       <InfoModal
         isOpen={showInfoModal}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReCaptchaTemplate from '../ReCaptchaTemplate';
 import InfoModal from '../InfoModal';
+import useCaptchaState from '../../hooks/useCaptchaState';
 import './WordleCaptcha.scss';
 
 const WordleCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
@@ -9,9 +10,8 @@ const WordleCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
   const [guesses, setGuesses] = useState([]);
   const [currentRow, setCurrentRow] = useState(0);
   const [gameStatus, setGameStatus] = useState('playing'); // 'playing', 'won', 'lost'
-  const [showAlert, setShowAlert] = useState({ show: false, isCorrect: false });
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [isDevMode, setIsDevMode] = useState(false);
+  const { isDevMode, triggerValidation, AlertComponent, DevModeIndicator } = useCaptchaState(onValidate);
 
   const maxGuesses = 4;
   const wordLength = 4;
@@ -68,11 +68,6 @@ const WordleCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
     'WORK', 'WORN', 'YARD', 'YEAH', 'YEAR', 'YOUR', 'ZERO', 'ZONE'
   ];
 
-  // Détection du mode dev
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setIsDevMode(urlParams.get('devMode') === 'velvet');
-  }, []);
 
   // Génération d'un nouveau mot
   const generateNewWord = useCallback(() => {
@@ -122,25 +117,11 @@ const WordleCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
     // Vérifier si c'est le bon mot
     if (currentGuess === targetWord) {
       setGameStatus('won');
-      setShowAlert({ show: true, isCorrect: true });
-      setTimeout(() => {
-        setShowAlert({ show: false, isCorrect: false });
-      }, 3000);
-      
-      if (onValidate) {
-        onValidate(true);
-      }
+      triggerValidation(true);
     } else if (newGuesses.length >= maxGuesses) {
       // Toutes les tentatives épuisées
       setGameStatus('lost');
-      setShowAlert({ show: true, isCorrect: false });
-      setTimeout(() => {
-        setShowAlert({ show: false, isCorrect: false });
-      }, 3000);
-      
-      if (onValidate) {
-        onValidate(false);
-      }
+      triggerValidation(false);
     } else {
       // Continuer le jeu
       setCurrentRow(currentRow + 1);
@@ -285,17 +266,9 @@ const WordleCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
         </div>
       </ReCaptchaTemplate>
       
-      {isDevMode && (
-        <div className="dev-mode-indicator">
-          DEV
-        </div>
-      )}
+      {DevModeIndicator}
       
-      {showAlert.show && (
-        <div className={`result-alert ${showAlert.isCorrect ? 'correct' : 'incorrect'}`}>
-          {showAlert.isCorrect ? '✓ Correct!' : '✗ Wrong!'}
-        </div>
-      )}
+      {AlertComponent}
       
       <InfoModal
         isOpen={showInfoModal}

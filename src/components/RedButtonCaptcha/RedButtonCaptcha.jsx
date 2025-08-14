@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReCaptchaTemplate from '../ReCaptchaTemplate';
 import InfoModal from '../InfoModal';
+import useCaptchaState from '../../hooks/useCaptchaState';
 import './RedButtonCaptcha.scss';
 
 const RedButtonCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
-  const [showAlert, setShowAlert] = useState({ show: false, isCorrect: false });
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [isDevMode, setIsDevMode] = useState(false);
+  const { isDevMode, triggerValidation, AlertComponent, DevModeIndicator } = useCaptchaState(onValidate);
   const [currentColor, setCurrentColor] = useState('red');
 
   // Liste des couleurs disponibles
@@ -29,11 +29,6 @@ const RedButtonCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) =>
     setCurrentColor(colors[randomIndex].name);
   };
 
-  // Détection du mode dev
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setIsDevMode(urlParams.get('devMode') === 'velvet');
-  }, []);
 
   // Initialisation avec une couleur aléatoire
   useEffect(() => {
@@ -44,28 +39,14 @@ const RedButtonCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) =>
   const handleAreaClick = useCallback((e) => {
     // Vérifier que ce n'est pas le bouton coloré qui a été cliqué
     if (!e.target.closest('.color-nuclear-button')) {
-      setShowAlert({ show: true, isCorrect: true });
-      setTimeout(() => {
-        setShowAlert({ show: false, isCorrect: false });
-      }, 3000);
-      
-      if (onValidate) {
-        onValidate(true);
-      }
+      triggerValidation(true);
     }
-  }, [onValidate]);
+  }, [triggerValidation]);
 
   // Gestion du clic sur le bouton coloré (mauvaise réponse)
   const handleColorButtonClick = (e) => {
     e.stopPropagation(); // Empêcher la propagation vers la zone
-    setShowAlert({ show: true, isCorrect: false });
-    setTimeout(() => {
-      setShowAlert({ show: false, isCorrect: false });
-    }, 3000);
-    
-    if (onValidate) {
-      onValidate(false);
-    }
+    triggerValidation(false);
   };
 
   // Gestion du refresh
@@ -127,17 +108,9 @@ const RedButtonCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) =>
         </div>
       </ReCaptchaTemplate>
       
-      {isDevMode && (
-        <div className="dev-mode-indicator">
-          DEV
-        </div>
-      )}
+      {DevModeIndicator}
       
-      {showAlert.show && (
-        <div className={`result-alert ${showAlert.isCorrect ? 'correct' : 'incorrect'}`}>
-          {showAlert.isCorrect ? '✓ Correct!' : '✗ Wrong!'}
-        </div>
-      )}
+      {AlertComponent}
       
       <InfoModal
         isOpen={showInfoModal}

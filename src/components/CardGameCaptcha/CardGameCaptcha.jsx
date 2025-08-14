@@ -1,26 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReCaptchaTemplate from '../ReCaptchaTemplate';
 import InfoModal from '../InfoModal';
+import useCaptchaState from '../../hooks/useCaptchaState';
 import './CardGameCaptcha.scss';
 
 const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => {
+  const { isDevMode, triggerValidation, AlertComponent, DevModeIndicator } = useCaptchaState(onValidate);
   const [gameState, setGameState] = useState('ready'); // 'ready', 'memorizing', 'shuffling', 'playing', 'won'
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [showAlert, setShowAlert] = useState({ show: false, isCorrect: false });
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [isDevMode, setIsDevMode] = useState(false);
   const [memoryTimer, setMemoryTimer] = useState(3);
   const [targetSymbol, setTargetSymbol] = useState('');
 
   // Symboles disponibles pour les cartes
   const symbols = ['♠', '♥', '♦', '♣', '★', '♪', '♫', '☀', '☽'];
 
-  // Détection du mode dev
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    setIsDevMode(urlParams.get('devMode') === 'velvet');
-  }, []);
 
   // Génération des cartes initiales
   const generateCards = useCallback(() => {
@@ -129,16 +124,8 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
     // Succès automatique puisque toutes les cartes ont le bon symbole
     setTimeout(() => {
       setGameState('won');
-      setShowAlert({ show: true, isCorrect: true });
-      setTimeout(() => {
-        setShowAlert({ show: false, isCorrect: false });
-      }, 3000);
+      triggerValidation(true);
     }, 1000);
-    
-    // Appeler onValidate immédiatement comme les autres captchas
-    if (onValidate) {
-      onValidate(true);
-    }
   };
 
   // Gestion du refresh
@@ -229,17 +216,8 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
         </div>
       </ReCaptchaTemplate>
       
-      {isDevMode && (
-        <div className="dev-mode-indicator">
-          DEV
-        </div>
-      )}
-      
-      {showAlert.show && (
-        <div className={`result-alert ${showAlert.isCorrect ? 'correct' : 'incorrect'}`}>
-          {showAlert.isCorrect ? '✓ Correct!' : '✗ Wrong!'}
-        </div>
-      )}
+      {DevModeIndicator}
+      {AlertComponent}
       
       <InfoModal
         isOpen={showInfoModal}
