@@ -7,6 +7,11 @@
   align-items: center;
   justify-content: center;
   
+  // Fix pour les icônes SVG du bouton info
+  .recaptcha-icon-btn svg {
+    fill: #5f6368 !important;
+  }
+  
   .dev-info {
     position: absolute;
     top: 10px;
@@ -60,16 +65,21 @@
     width: 15%;
     height: auto;
     aspect-ratio: 2/3;
-    cursor: pointer;
+    cursor: default;
     perspective: 1000px;
     user-select: none;
+    
+    // Cursor pointer seulement quand on peut jouer
+    &:not(.disabled) {
+      cursor: pointer;
+    }
     
     &.hidden .card-inner {
       transform: rotateY(180deg);
     }
     
     &.selected {
-      transform: scale(1.05) !important;
+      transform: translate(var(--card-x), var(--card-y)) scale(1.05);
     }
     
     .card-inner {
@@ -122,36 +132,24 @@
       }
     }
     
-    // Hover effect seulement quand on peut cliquer
-    &:hover {
-      .card-inner {
-        transform: translateY(-2px);
-      }
+    // Hover effect - simple scale
+    &:hover:not(.disabled) {
+      transform: translate(var(--card-x), var(--card-y)) scale(1.1);
     }
+    
+    // Pas besoin de classe clicked, c'est géré par .hidden
     
     // Disabled state pendant le mélange
     &.disabled {
       cursor: not-allowed;
       pointer-events: none;
+      
+      &:hover {
+        transform: none !important;
+      }
     }
   }
   
-  .game-result {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 14px;
-    
-    &.success {
-      background: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-    }
-  }
 }
 
 // Responsive design

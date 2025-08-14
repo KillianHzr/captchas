@@ -77,8 +77,8 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
     // Phase 1: Toutes les cartes vont au centre
     setCards(prev => prev.map(card => ({
       ...card,
-      x: 40, // Centre en pourcentage (50% - 10% pour compenser la largeur de 20%)
-      y: 40  // Centre en pourcentage (50% - 10% pour compenser la hauteur)
+      x: 140, // Centre par rapport aux positions de base (140%)
+      y: 140  // Centre par rapport aux positions de base (140%)
     })));
     
     // Phase 2: Après 1 seconde, redistribuer aléatoirement
@@ -130,11 +130,12 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
       setTimeout(() => {
         setShowAlert({ show: false, isCorrect: false });
       }, 3000);
-      
-      if (onValidate) {
-        onValidate(true);
-      }
     }, 1000);
+    
+    // Appeler onValidate immédiatement comme les autres captchas
+    if (onValidate) {
+      onValidate(true);
+    }
   };
 
   // Gestion du refresh
@@ -200,8 +201,10 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
             {cards.map((card) => (
               <div
                 key={card.id}
-                className={`card ${!card.isRevealed ? 'hidden' : ''} ${selectedCard === card.id ? 'selected' : ''}`}
+                className={`card ${!card.isRevealed ? 'hidden' : ''} ${selectedCard === card.id ? 'selected' : ''} ${gameState !== 'playing' ? 'disabled' : ''}`}
                 style={{
+                  '--card-x': `${card.x}%`,
+                  '--card-y': `${card.y}%`,
                   transform: `translate(${card.x}%, ${card.y}%)`,
                   transition: gameState === 'shuffling' ? 'transform 1s ease-in-out' : 'transform 0.3s ease'
                 }}
@@ -219,11 +222,6 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
             ))}
           </div>
           
-          {gameState === 'won' && (
-            <div className="game-result success">
-              ✓ Correct! You found the {targetSymbol} card!
-            </div>
-          )}
         </div>
       </ReCaptchaTemplate>
       
