@@ -121,9 +121,9 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
     
     setSelectedCard(cardId);
     
-    // Révéler la carte cliquée
+    // Révéler la carte cliquée et ajuster sa position
     setCards(prev => prev.map(card => 
-      card.id === cardId ? { ...card, isRevealed: true } : card
+      card.id === cardId ? { ...card, isRevealed: true, x: card.x - 10 } : card
     ));
     
     // Succès automatique puisque toutes les cartes ont le bon symbole
