@@ -32,7 +32,7 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
     const newCards = shuffledSymbols.map((symbol, index) => ({
       id: index,
       symbol,
-      isRevealed: true,
+      isRevealed: false, // Cartes retournées de base
       x: (index % 3) * 140, // Positions: 0%, 140%, 280%
       y: Math.floor(index / 3) * 140, // Positions: 0%, 140%, 280%
       originalX: (index % 3) * 140,
@@ -53,6 +53,9 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
   // Démarrage du jeu
   const handleStart = () => {
     setGameState('memorizing');
+    
+    // Révéler les cartes immédiatement
+    setCards(prev => prev.map(card => ({ ...card, isRevealed: true })));
     
     // Timer de 3 secondes pour mémoriser
     let timer = 3;
@@ -158,6 +161,12 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
           START
         </button>
       );
+    } else if (gameState === 'memorizing') {
+      return (
+        <button className="recaptcha-skip-btn disabled">
+          {memoryTimer}
+        </button>
+      );
     } else {
       return (
         <button className="recaptcha-skip-btn disabled">
@@ -172,7 +181,7 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
       <ReCaptchaTemplate
         titlePrefix="Memorize the cards, find"
         titleHighlight={`the ${targetSymbol} card`}
-        subtitle="You have 3 seconds to memorize"
+        subtitle={gameState === 'ready' ? 'Click START to begin' : 'You have 3 seconds to memorize'}
         showSkip={false}
         showRefresh={true}
         customButton={getCustomButton()}
@@ -191,11 +200,6 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
             </div>
           )}
           
-          {gameState === 'memorizing' && (
-            <div className="memory-timer">
-              {memoryTimer}
-            </div>
-          )}
           
           <div className="cards-container">
             {cards.map((card) => (

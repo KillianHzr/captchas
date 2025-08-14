@@ -34,23 +34,6 @@
     }
   }
   
-  .memory-timer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 120px;
-    font-weight: bold;
-    color: #ff4444;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    z-index: 100;
-    animation: pulse 1s infinite;
-    
-    @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.1); }
-    }
-  }
   
   .cards-container {
     position: relative;
