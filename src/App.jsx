@@ -7,6 +7,7 @@ import RedButtonCaptcha from './components/RedButtonCaptcha'
 import HangmanCaptcha from './components/HangmanCaptcha'
 import WordleCaptcha from './components/WordleCaptcha'
 import CardGameCaptcha from './components/CardGameCaptcha'
+import DesktopCleanupCaptcha from './components/DesktopCleanupCaptcha'
 import './App.css'
 
 function App() {
@@ -198,6 +199,18 @@ function App() {
         <div>
           <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Card Game Captcha</h3>
           <CardGameCaptcha
+            onValidate={handleValidate}
+            onSkip={handleSkip}
+            onRefresh={handleRefresh}
+            onAudio={handleAudio}
+            onInfo={handleInfo}
+          />
+        </div>
+
+        {/* Exemple 11: Desktop Cleanup Captcha */}
+        <div>
+          <h3 style={{ color: '#5f6368', marginBottom: '16px' }}>Desktop Cleanup Captcha</h3>
+          <DesktopCleanupCaptcha
             onValidate={handleValidate}
             onSkip={handleSkip}
             onRefresh={handleRefresh}
