@@ -84,6 +84,8 @@
     transition: all 0.2s ease;
     padding: 4px;
     border-radius: 4px;
+    width: fit-content !important;
+    height: fit-content !important;
     
     &:hover {
       background: rgba(255, 255, 255, 0.1);

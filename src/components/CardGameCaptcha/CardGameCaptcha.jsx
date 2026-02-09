@@ -23,15 +23,15 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
     const targetSymbol = shuffledSymbols[Math.floor(Math.random() * 9)];
     setTargetSymbol(targetSymbol);
     
-    // Positions exactes selon le HTML fourni
+    // Positions en pixels pour grille 3x3 (cartes 60x80, conteneur 200x260)
     const newCards = shuffledSymbols.map((symbol, index) => ({
       id: index,
       symbol,
-      isRevealed: false, // Cartes retournées de base
-      x: (index % 3) * 140, // Positions: 0%, 140%, 280%
-      y: Math.floor(index / 3) * 140, // Positions: 0%, 140%, 280%
-      originalX: (index % 3) * 140,
-      originalY: Math.floor(index / 3) * 140
+      isRevealed: false,
+      x: (index % 3) * 70, // 0, 70, 140 pixels
+      y: Math.floor(index / 3) * 90, // 0, 90, 180 pixels
+      originalX: (index % 3) * 70,
+      originalY: Math.floor(index / 3) * 90
     }));
     
     setCards(newCards);
@@ -71,21 +71,21 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
   // Animation de mélange des cartes
   const shuffleCards = () => {
     setGameState('shuffling');
-    
+
     // Phase 1: Toutes les cartes vont au centre
     setCards(prev => prev.map(card => ({
       ...card,
-      x: 140, // Centre par rapport aux positions de base (140%)
-      y: 140  // Centre par rapport aux positions de base (140%)
+      x: 70, // Centre (position du milieu)
+      y: 90  // Centre (position du milieu)
     })));
-    
+
     // Phase 2: Après 1 seconde, redistribuer aléatoirement
     setTimeout(() => {
       const shuffledPositions = [];
       for (let i = 0; i < 9; i++) {
         shuffledPositions.push({
-          x: (i % 3) * 140, // Positions: 0%, 140%, 280%
-          y: Math.floor(i / 3) * 140
+          x: (i % 3) * 70, // 0, 70, 140 pixels
+          y: Math.floor(i / 3) * 90 // 0, 90, 180 pixels
         });
       }
       
@@ -116,9 +116,9 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
     
     setSelectedCard(cardId);
     
-    // Révéler la carte cliquée et ajuster sa position
-    setCards(prev => prev.map(card => 
-      card.id === cardId ? { ...card, isRevealed: true, x: card.x - 10 } : card
+    // Révéler la carte cliquée
+    setCards(prev => prev.map(card =>
+      card.id === cardId ? { ...card, isRevealed: true } : card
     ));
     
     // Succès automatique puisque toutes les cartes ont le bon symbole
@@ -194,9 +194,9 @@ const CardGameCaptcha = ({ onValidate, onSkip, onRefresh, onAudio, onInfo }) => 
                 key={card.id}
                 className={`card ${!card.isRevealed ? 'hidden' : ''} ${selectedCard === card.id ? 'selected' : ''} ${gameState !== 'playing' ? 'disabled' : ''}`}
                 style={{
-                  '--card-x': `${card.x}%`,
-                  '--card-y': `${card.y}%`,
-                  transform: `translate(${card.x}%, ${card.y}%)`,
+                  '--card-x': `${card.x}px`,
+                  '--card-y': `${card.y}px`,
+                  transform: `translate(${card.x}px, ${card.y}px)`,
                   transition: gameState === 'shuffling' ? 'transform 1s ease-in-out' : 'transform 0.3s ease'
                 }}
                 onClick={() => handleCardClick(card.id)}

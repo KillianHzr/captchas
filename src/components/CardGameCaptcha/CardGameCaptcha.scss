@@ -51,17 +51,15 @@
   
   .cards-container {
     position: relative;
-    width: calc(80% - 60px);
-    height: 100%;
+    width: 200px;
+    height: 260px;
     margin: auto;
-    padding: 20px 60px;
   }
-  
+
   .card {
     position: absolute;
-    width: 15%;
-    height: auto;
-    aspect-ratio: 2/3;
+    width: 60px;
+    height: 80px;
     cursor: default;
     perspective: 1000px;
     user-select: none;
@@ -76,7 +74,8 @@
     }
     
     &.selected {
-      transform: translate(var(--card-x), var(--card-y)) scale(1.05);
+      transform: translate(var(--card-x), var(--card-y)) scale(1.08);
+      z-index: 10;
     }
     
     .card-inner {
@@ -102,22 +101,22 @@
     
     .card-front {
       background: linear-gradient(145deg, #ffffff, #f0f0f0);
-      
+
       .card-symbol {
-        font-size: 32px;
+        font-size: 24px;
         font-weight: bold;
         color: #333;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
       }
     }
-    
+
     .card-back {
       background: linear-gradient(145deg, #4a90e2, #357abd);
       transform: rotateY(180deg);
-      
+
       .card-pattern {
-        width: 60px;
-        height: 80px;
+        width: 40px;
+        height: 60px;
         background: repeating-linear-gradient(
           45deg,
           rgba(255, 255, 255, 0.1),
@@ -130,20 +129,14 @@
     }
     
     // Hover effect - simple scale
-    &:hover:not(.disabled) {
-      transform: translate(var(--card-x), var(--card-y)) scale(1.1);
+    &:hover:not(.disabled):not(.selected) {
+      transform: translate(var(--card-x), var(--card-y)) scale(1.08);
+      z-index: 5;
     }
-    
-    // Pas besoin de classe clicked, c'est géré par .hidden
-    
+
     // Disabled state pendant le mélange
     &.disabled {
-      cursor: not-allowed;
       pointer-events: none;
-      
-      &:hover {
-        transform: none !important;
-      }
     }
   }
   
@@ -153,15 +146,10 @@
 @media (max-width: 480px) {
   .card-game-captcha {
     .cards-container {
-      width: 320px;
-      height: 380px;
-      transform: scale(0.85);
+      transform: scale(0.9);
     }
-    
+
     .card {
-      width: 70px;
-      height: 100px;
-      
       .card-symbol {
         font-size: 28px;
       }

@@ -7,7 +7,7 @@ $recaptcha-bg: #ffffff;
 $recaptcha-shadow: rgba(0, 0, 0, 0.12);
 
 .recaptcha-container {
-  width: 300px;
+  width: 300px !important;
   background: $recaptcha-bg;
   border: 1px solid $recaptcha-border;
   border-radius: 4px;
@@ -16,11 +16,11 @@ $recaptcha-shadow: rgba(0, 0, 0, 0.12);
   overflow: hidden;
   
   @media (max-width: 768px) {
-    width: 280px;
+    width: 280px !important;
   }
   
   @media (max-width: 480px) {
-    width: 260px;
+    width: 260px !important;
   }
 }
 
