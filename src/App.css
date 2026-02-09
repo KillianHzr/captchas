@@ -345,6 +345,12 @@
   flex-direction: column;
 }
 
+.gallery-item-header {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
 .gallery-item-name {
   color: #000;
   font-size: 1rem;
