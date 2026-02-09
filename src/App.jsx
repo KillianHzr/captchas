@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import MorseCaptcha from './components/MorseCaptcha'
 import ParadoxCaptcha from './components/ParadoxCaptcha'
 import PatienceCaptcha from './components/PatienceCaptcha'
@@ -21,13 +21,29 @@ const CAPTCHA_ORDER = [
   { id: 'paradox', name: 'Paradox', Component: ParadoxCaptcha, difficulty: 8 },
 ]
 
+const formatTime = (ms) => {
+  const seconds = Math.floor(ms / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const remainingSeconds = seconds % 60
+  const remainingMs = Math.floor((ms % 1000) / 10)
+  return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}.${remainingMs.toString().padStart(2, '0')}`
+}
+
 // Page d'introduction
-function IntroPage({ onStart }) {
+function IntroPage({ onStart, bestScore }) {
   return (
     <div className="page intro-page">
       <div className="intro-content">
         <h1 className="intro-title">HUMAN?</h1>
         <p className="intro-subtitle">Identity Check</p>
+        
+        {bestScore && (
+          <div className="best-score-badge">
+            <span className="label">Best Performance</span>
+            <span className="value">{formatTime(bestScore)}</span>
+          </div>
+        )}
+
         <p className="intro-description">
           Please prove your biological origin through a series of standard interactions.
         </p>
@@ -51,12 +67,17 @@ function IntroPage({ onStart }) {
 }
 
 // Page de captcha individuel
-function CaptchaPage({ captcha, currentIndex, total, onSuccess, onRefresh }) {
+function CaptchaPage({ captcha, currentIndex, total, onSuccess, onRefresh, currentTime }) {
   const { Component, name, difficulty } = captcha
 
   return (
     <div className="page captcha-page">
       <div className="captcha-sidebar">
+        <div className="timer-display">
+          <span className="timer-label">Session Duration</span>
+          <span className="timer-value">{formatTime(currentTime)}</span>
+        </div>
+
         <div className="progress-info">
           <span className="progress-label">Security Progress</span>
           <div className="progress-bar-container">
@@ -101,12 +122,13 @@ function CaptchaPage({ captcha, currentIndex, total, onSuccess, onRefresh }) {
 }
 
 // Page finale avec tous les captchas
-function FinalPage({ onRestart }) {
+function FinalPage({ onRestart, finalTime, isNewRecord }) {
   return (
     <div className="page final-page">
       <div className="final-header">
-        <h1 className="final-title">Verification Complete</h1>
-        <p className="final-subtitle">Identity successfully confirmed.</p>
+        <h1 className="final-title">Verified</h1>
+        <p className="final-subtitle">Identity confirmed in {formatTime(finalTime)}</p>
+        {isNewRecord && <div className="new-record-tag">NEW RECORD</div>}
       </div>
 
       <h2 className="gallery-title">Session History</h2>
@@ -148,18 +170,60 @@ function App() {
   const [captchaKeys, setCaptchaKeys] = useState(
     CAPTCHA_ORDER.reduce((acc, c) => ({ ...acc, [c.id]: 0 }), {})
   )
+  
+  // Timer state
+  const [time, setTime] = useState(0)
+  const [startTime, setStartTime] = useState(null)
+  const [finalTime, setFinalTime] = useState(0)
+  const [bestScore, setBestScore] = useState(null)
+  const [isNewRecord, setIsNewRecord] = useState(false)
+  const timerRef = useRef(null)
+
+  // Load best score on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('uncanny-captcha-best-score')
+    if (saved) setBestScore(parseInt(saved))
+  }, [])
+
+  // Timer logic
+  useEffect(() => {
+    if (currentStep >= 0 && currentStep < CAPTCHA_ORDER.length) {
+      if (!startTime) setStartTime(Date.now())
+      
+      timerRef.current = setInterval(() => {
+        setTime(Date.now() - (startTime || Date.now()))
+      }, 50)
+    } else {
+      clearInterval(timerRef.current)
+    }
+
+    return () => clearInterval(timerRef.current)
+  }, [currentStep, startTime])
 
   const handleStart = () => {
+    setTime(0)
+    setStartTime(Date.now())
+    setIsNewRecord(false)
     setCurrentStep(0)
   }
 
   const handleSuccess = () => {
-    // Attendre que l'alerte du captcha soit visible avant de passer au suivant
     setTimeout(() => {
       if (currentStep < CAPTCHA_ORDER.length - 1) {
         setCurrentStep(currentStep + 1)
       } else {
-        setCurrentStep(CAPTCHA_ORDER.length) // Go to final page
+        const totalTime = Date.now() - startTime
+        setFinalTime(totalTime)
+        
+        // Update best score
+        const savedBest = localStorage.getItem('uncanny-captcha-best-score')
+        if (!savedBest || totalTime < parseInt(savedBest)) {
+          localStorage.setItem('uncanny-captcha-best-score', totalTime.toString())
+          setBestScore(totalTime)
+          setIsNewRecord(true)
+        }
+        
+        setCurrentStep(CAPTCHA_ORDER.length)
       }
     }, 1500)
   }
@@ -176,6 +240,8 @@ function App() {
 
   const handleRestart = () => {
     setCurrentStep(-1)
+    setTime(0)
+    setStartTime(null)
     setCaptchaKeys(CAPTCHA_ORDER.reduce((acc, c) => ({ ...acc, [c.id]: 0 }), {}))
   }
 
@@ -183,7 +249,7 @@ function App() {
     <div className="app">
       {/* Pages */}
       {currentStep === -1 && (
-        <IntroPage onStart={handleStart} />
+        <IntroPage onStart={handleStart} bestScore={bestScore} />
       )}
 
       {currentStep >= 0 && currentStep < CAPTCHA_ORDER.length && (
@@ -194,11 +260,16 @@ function App() {
           total={CAPTCHA_ORDER.length}
           onSuccess={handleSuccess}
           onRefresh={handleRefresh}
+          currentTime={time}
         />
       )}
 
       {currentStep === CAPTCHA_ORDER.length && (
-        <FinalPage onRestart={handleRestart} />
+        <FinalPage 
+          onRestart={handleRestart} 
+          finalTime={finalTime} 
+          isNewRecord={isNewRecord}
+        />
       )}
     </div>
   )
