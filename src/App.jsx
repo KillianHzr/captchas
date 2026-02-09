@@ -9,16 +9,16 @@ import CardGameCaptcha from './components/CardGameCaptcha'
 import DesktopCleanupCaptcha from './components/DesktopCleanupCaptcha'
 import './App.css'
 
-// Ordre des captchas du moins WTF au plus WTF
+// Ordre des captchas du moins étrange au plus étrange
 const CAPTCHA_ORDER = [
-  { id: 'hangman', name: 'Hangman', Component: HangmanCaptcha, wtfLevel: 1 },
-  { id: 'wordle', name: 'Wordle', Component: WordleCaptcha, wtfLevel: 2 },
-  { id: 'card', name: 'Card Game', Component: CardGameCaptcha, wtfLevel: 3 },
-  { id: 'morse', name: 'Morse Code', Component: MorseCaptcha, wtfLevel: 4 },
-  { id: 'patience', name: 'Patience', Component: PatienceCaptcha, wtfLevel: 5 },
-  { id: 'desktop', name: 'Desktop Cleanup', Component: DesktopCleanupCaptcha, wtfLevel: 6 },
-  { id: 'redbutton', name: 'Red Button', Component: RedButtonCaptcha, wtfLevel: 7 },
-  { id: 'paradox', name: 'Paradox', Component: ParadoxCaptcha, wtfLevel: 8 },
+  { id: 'hangman', name: 'Hangman', Component: HangmanCaptcha, difficulty: 1 },
+  { id: 'wordle', name: 'Wordle', Component: WordleCaptcha, difficulty: 2 },
+  { id: 'card', name: 'Card Game', Component: CardGameCaptcha, difficulty: 3 },
+  { id: 'morse', name: 'Morse Code', Component: MorseCaptcha, difficulty: 4 },
+  { id: 'patience', name: 'Patience', Component: PatienceCaptcha, difficulty: 5 },
+  { id: 'desktop', name: 'Desktop Cleanup', Component: DesktopCleanupCaptcha, difficulty: 6 },
+  { id: 'redbutton', name: 'Red Button', Component: RedButtonCaptcha, difficulty: 7 },
+  { id: 'paradox', name: 'Paradox', Component: ParadoxCaptcha, difficulty: 8 },
 ]
 
 // Page d'introduction
@@ -26,25 +26,24 @@ function IntroPage({ onStart }) {
   return (
     <div className="page intro-page">
       <div className="intro-content">
-        <h1 className="intro-title">reCAPTCHA</h1>
-        <p className="intro-subtitle">Verification Protocol v2.0.4</p>
+        <h1 className="intro-title">HUMAN?</h1>
+        <p className="intro-subtitle">Identity Check</p>
         <p className="intro-description">
-          Please complete the following {CAPTCHA_ORDER.length} security checks to verify your humanity. 
-          Anomaly detection is active.
+          Please prove your biological origin through a series of standard interactions.
         </p>
         <div className="wtf-meter">
           <div className="wtf-label-container">
-            <span className="wtf-label">Standard</span>
-            <span className="wtf-label">Anomalous</span>
+            <span className="wtf-label">Organic</span>
+            <span className="wtf-label">Synthetic</span>
           </div>
           <div className="wtf-bar">
             {CAPTCHA_ORDER.map((_, i) => (
-              <div key={i} className="wtf-segment" style={{ opacity: 0.3 + (i * 0.1) }} />
+              <div key={i} className="wtf-segment" style={{ opacity: 0.2 + (i * 0.1) }} />
             ))}
           </div>
         </div>
         <button className="start-button" onClick={onStart}>
-          Initialize Verification
+          Enter Challenge
         </button>
       </div>
     </div>
@@ -53,13 +52,13 @@ function IntroPage({ onStart }) {
 
 // Page de captcha individuel
 function CaptchaPage({ captcha, currentIndex, total, onSuccess, onRefresh }) {
-  const { Component, name, wtfLevel } = captcha
+  const { Component, name, difficulty } = captcha
 
   return (
     <div className="page captcha-page">
       <div className="captcha-sidebar">
         <div className="progress-info">
-          <span className="progress-label">Verification Progress</span>
+          <span className="progress-label">Security Progress</span>
           <div className="progress-bar-container">
             <div
               className="progress-fill"
@@ -77,7 +76,7 @@ function CaptchaPage({ captcha, currentIndex, total, onSuccess, onRefresh }) {
             {[...Array(8)].map((_, i) => (
               <span
                 key={i}
-                className={`wtf-dot ${i < wtfLevel ? 'active' : ''}`}
+                className={`wtf-dot ${i < difficulty ? 'active' : ''}`}
               />
             ))}
           </div>
@@ -106,25 +105,20 @@ function FinalPage({ onRestart }) {
   return (
     <div className="page final-page">
       <div className="final-header">
-        <h1 className="final-title">Verified</h1>
-        <p className="final-subtitle">You have proven your humanity.</p>
+        <h1 className="final-title">Verification Complete</h1>
+        <p className="final-subtitle">Identity successfully confirmed.</p>
       </div>
 
-      <div className="final-trophy">
-        <div className="trophy-icon">🛡️</div>
-        <p className="trophy-text">All protocols passed successfully.</p>
-      </div>
-
-      <h2 className="gallery-title">Verification Logs</h2>
+      <h2 className="gallery-title">Session History</h2>
       <div className="captcha-gallery">
         {CAPTCHA_ORDER.map((captcha) => (
           <div key={captcha.id} className="gallery-item">
             <div className="gallery-item-header">
               <span className="gallery-item-name">{captcha.name}</span>
               <span className="gallery-item-wtf">
-                <span style={{ fontSize: '12px', color: '#64748b', marginRight: '6px' }}>LEVEL</span>
-                {'●'.repeat(captcha.wtfLevel)}
-                <span style={{ opacity: 0.2 }}>{'●'.repeat(8 - captcha.wtfLevel)}</span>
+                <span style={{ fontSize: '12px', color: '#64748b', marginRight: '6px' }}>ANOMALY</span>
+                {'●'.repeat(captcha.difficulty)}
+                <span style={{ opacity: 0.1 }}>{'●'.repeat(8 - captcha.difficulty)}</span>
               </span>
             </div>
             <div className="gallery-captcha">
@@ -140,9 +134,11 @@ function FinalPage({ onRestart }) {
         ))}
       </div>
 
-      <button className="restart-button" onClick={onRestart}>
-        Re-initialize Protocol
-      </button>
+      <div className="restart-container">
+        <button className="restart-button" onClick={onRestart}>
+          Re-initialize Protocol
+        </button>
+      </div>
     </div>
   )
 }
