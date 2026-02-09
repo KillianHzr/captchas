@@ -173,42 +173,7 @@
   z-index: 9999;
 }
 
-// Alert de résultat (réutilisé des autres captchas)
-.result-alert {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px 40px;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  z-index: 10000;
-  animation: alertFadeIn 0.3s ease-out;
-  
-  &.correct {
-    background: #d4edda;
-    color: #155724;
-    border: 2px solid #c3e6cb;
-  }
-  
-  &.incorrect {
-    background: #f8d7da;
-    color: #721c24;
-    border: 2px solid #f5c6cb;
-  }
-  
-  @keyframes alertFadeIn {
-    from {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
-    }
-  }
-}
+
 
 // Hint modal styling
 .card-game-hint {

@@ -175,40 +175,7 @@
   }
 }
 
-// Alertes de résultat
-.result-alert {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px 30px;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  animation: alertFadeIn 0.3s ease;
 
-  &.correct {
-    background: linear-gradient(135deg, #28a745, #20c997);
-  }
-
-  &.incorrect {
-    background: linear-gradient(135deg, #dc3545, #e74c3c);
-  }
-}
-
-@keyframes alertFadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
 
 // Indicateur mode dev
 .dev-mode-indicator {

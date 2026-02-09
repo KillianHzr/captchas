@@ -26,24 +26,25 @@ function IntroPage({ onStart }) {
   return (
     <div className="page intro-page">
       <div className="intro-content">
-        <h1 className="intro-title">reCAPTCHA Challenge</h1>
-        <p className="intro-subtitle">Prouvez que vous êtes humain...</p>
+        <h1 className="intro-title">reCAPTCHA</h1>
+        <p className="intro-subtitle">Verification Protocol v2.0.4</p>
         <p className="intro-description">
-          Résolvez {CAPTCHA_ORDER.length} captchas de plus en plus étranges.
-          <br />
-          Bonne chance.
+          Please complete the following {CAPTCHA_ORDER.length} security checks to verify your humanity. 
+          Anomaly detection is active.
         </p>
         <div className="wtf-meter">
-          <span className="wtf-label">Normal</span>
+          <div className="wtf-label-container">
+            <span className="wtf-label">Standard</span>
+            <span className="wtf-label">Anomalous</span>
+          </div>
           <div className="wtf-bar">
             {CAPTCHA_ORDER.map((_, i) => (
               <div key={i} className="wtf-segment" style={{ opacity: 0.3 + (i * 0.1) }} />
             ))}
           </div>
-          <span className="wtf-label">WTF</span>
         </div>
         <button className="start-button" onClick={onStart}>
-          Commencer
+          Initialize Verification
         </button>
       </div>
     </div>
@@ -56,18 +57,22 @@ function CaptchaPage({ captcha, currentIndex, total, onSuccess, onRefresh }) {
 
   return (
     <div className="page captcha-page">
-      <div className="captcha-header">
+      <div className="captcha-sidebar">
         <div className="progress-info">
-          <span className="progress-text">{currentIndex + 1} / {total}</span>
-          <div className="progress-bar">
+          <span className="progress-label">Verification Progress</span>
+          <div className="progress-bar-container">
             <div
               className="progress-fill"
-              style={{ width: `${((currentIndex + 1) / total) * 100}%` }}
+              style={{ width: `${((currentIndex) / total) * 100}%` }}
             />
           </div>
+          <div className="step-counter">
+            {currentIndex + 1} <span className="step-total">/ {total}</span>
+          </div>
         </div>
+        
         <div className="wtf-indicator">
-          <span className="wtf-text">WTF Level:</span>
+          <span className="wtf-text">Anomaly Level</span>
           <div className="wtf-dots">
             {[...Array(8)].map((_, i) => (
               <span
@@ -79,7 +84,7 @@ function CaptchaPage({ captcha, currentIndex, total, onSuccess, onRefresh }) {
         </div>
       </div>
 
-      <div className="captcha-container">
+      <div className="captcha-main-area">
         <Component
           onValidate={(isCorrect) => {
             if (isCorrect) {
@@ -101,24 +106,25 @@ function FinalPage({ onRestart }) {
   return (
     <div className="page final-page">
       <div className="final-header">
-        <h1 className="final-title">Félicitations!</h1>
-        <p className="final-subtitle">Vous avez prouvé que vous êtes humain</p>
-        <p className="final-description">(ou un robot très sophistiqué)</p>
+        <h1 className="final-title">Verified</h1>
+        <p className="final-subtitle">You have proven your humanity.</p>
       </div>
 
       <div className="final-trophy">
-        <div className="trophy-icon">🏆</div>
-        <p className="trophy-text">Tous les captchas complétés!</p>
+        <div className="trophy-icon">🛡️</div>
+        <p className="trophy-text">All protocols passed successfully.</p>
       </div>
 
-      <h2 className="gallery-title">Galerie des captchas WTF</h2>
+      <h2 className="gallery-title">Verification Logs</h2>
       <div className="captcha-gallery">
         {CAPTCHA_ORDER.map((captcha) => (
           <div key={captcha.id} className="gallery-item">
             <div className="gallery-item-header">
               <span className="gallery-item-name">{captcha.name}</span>
               <span className="gallery-item-wtf">
-                {'🔥'.repeat(Math.ceil(captcha.wtfLevel / 2))}
+                <span style={{ fontSize: '12px', color: '#64748b', marginRight: '6px' }}>LEVEL</span>
+                {'●'.repeat(captcha.wtfLevel)}
+                <span style={{ opacity: 0.2 }}>{'●'.repeat(8 - captcha.wtfLevel)}</span>
               </span>
             </div>
             <div className="gallery-captcha">
@@ -135,7 +141,7 @@ function FinalPage({ onRestart }) {
       </div>
 
       <button className="restart-button" onClick={onRestart}>
-        Recommencer
+        Re-initialize Protocol
       </button>
     </div>
   )

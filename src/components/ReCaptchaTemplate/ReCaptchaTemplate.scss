@@ -1,61 +1,68 @@
-// Variables reCAPTCHA officielles
-$recaptcha-blue: #4285f4;
-$recaptcha-border: #dadce0;
-$recaptcha-text: #3c4043;
-$recaptcha-subtitle: #5f6368;
+// Variables reCAPTCHA - Refined
+$recaptcha-blue: #1a73e8; /* More modern Google blue */
+$recaptcha-border: #d1d5db; /* Gray 300 */
+$recaptcha-text: #1f2937; /* Gray 800 */
+$recaptcha-subtitle: #4b5563; /* Gray 600 */
 $recaptcha-bg: #ffffff;
-$recaptcha-shadow: rgba(0, 0, 0, 0.12);
+$recaptcha-shadow: rgba(0, 0, 0, 0.05);
 
 .recaptcha-container {
-  width: 300px !important;
+  width: 340px !important; /* Slightly wider for better breathing room if possible, or stick to 300-320 */
   background: $recaptcha-bg;
   border: 1px solid $recaptcha-border;
-  border-radius: 4px;
-  box-shadow: 0 2px 10px $recaptcha-shadow;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  border-radius: 6px; /* Slightly more rounded */
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 4px 6px rgba(0, 0, 0, 0.04);
+  font-family: 'Roboto', 'Arial', sans-serif;
   overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
   
-  @media (max-width: 768px) {
-    width: 280px !important;
+  &:hover {
+    box-shadow: 
+      0 4px 6px rgba(0, 0, 0, 0.06),
+      0 10px 15px rgba(0, 0, 0, 0.05);
   }
   
-  @media (max-width: 480px) {
-    width: 260px !important;
+  @media (max-width: 768px) {
+    width: 100% !important;
+    max-width: 340px;
   }
 }
 
 .recaptcha-header {
   background: $recaptcha-blue;
-  padding: 16px;
+  padding: 18px 20px;
   color: white;
   
   .recaptcha-title-prefix {
     font-size: 14px;
     font-weight: 400;
-    line-height: 18px;
-    margin-bottom: 2px;
+    line-height: 1.4;
+    margin-bottom: 4px;
+    opacity: 0.95;
     
     .underline {
       text-decoration: underline;
+      text-decoration-thickness: 1px;
     }
   }
   
   .recaptcha-title-highlight {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 700;
-    line-height: 22px;
-    margin-bottom: 2px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
     
     .clickable-highlight {
       cursor: pointer;
-      transition: opacity 0.2s ease;
+      border-bottom: 2px solid rgba(255,255,255,0.3);
+      padding-bottom: 1px;
+      transition: all 0.2s ease;
       
       &:hover {
-        opacity: 0.8;
-      }
-      
-      &:active {
-        opacity: 0.6;
+        border-color: rgba(255,255,255,0.8);
       }
     }
   }
@@ -63,16 +70,17 @@ $recaptcha-shadow: rgba(0, 0, 0, 0.12);
   .recaptcha-subtitle {
     font-size: 14px;
     font-weight: 400;
-    opacity: 0.85;
-    line-height: 18px;
+    opacity: 0.9;
+    line-height: 1.4;
+    margin-top: 4px;
   }
 }
 
 .recaptcha-content {
   width: 100%;
-  height: 300px;
+  height: 340px; /* Match width approximately for square feel */
   background: $recaptcha-bg;
-  border-bottom: 1px solid $recaptcha-border;
+  border-bottom: 1px solid #f3f4f6;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,16 +88,20 @@ $recaptcha-shadow: rgba(0, 0, 0, 0.12);
   
   // Style par défaut si aucun contenu n'est fourni
   &:empty::before {
-    content: '';
+    content: 'No Signal';
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
-    background: #f8f9fa;
-    border: 2px dashed #dadce0;
-    box-sizing: border-box;
+    background: #f9fafb;
+    color: #9ca3af;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
   }
   
   @media (max-width: 480px) {
-    height: 260px;
+    height: 300px;
   }
 }
 
@@ -97,81 +109,89 @@ $recaptcha-shadow: rgba(0, 0, 0, 0.12);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 14px 16px;
   background: $recaptcha-bg;
-  border-top: 1px solid $recaptcha-border;
+  border-top: 1px solid #f3f4f6;
   
   .recaptcha-toolbar-left {
     display: flex;
-    gap: 8px;
+    gap: 12px;
   }
   
   .recaptcha-icon-btn {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border: none;
     background: transparent;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background-color 0.2s ease;
     
     &:hover {
-      background: #f1f3f4;
+      background: #f3f4f6;
+      svg {
+        fill: #1f2937;
+      }
     }
     
     &:active {
-      background: #e8eaed;
+      background: #e5e7eb;
     }
     
     svg {
-      min-width: 26px;
-      min-height: 26px;
-      fill: #5f6368;
+      width: 20px;
+      height: 20px;
+      fill: #6b7280;
+      transition: fill 0.2s;
     }
   }
   
   .recaptcha-skip-btn {
-    background: $recaptcha-blue;
+    background: #1a73e8;
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 2px;
-    font-size: 12px;
-    font-weight: 500;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
     
     &:hover:not(:disabled) {
-      background: #3367d6;
+      background: #1557b0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
     
     &:active:not(:disabled) {
-      background: #2954c7;
+      background: #174ea6;
+      transform: translateY(1px);
     }
     
     &.disabled,
     &:disabled {
-      background: #9aa0a6;
+      background: #e5e7eb;
+      color: #9ca3af;
       cursor: not-allowed;
-      opacity: 0.6;
     }
     
     &.valid {
-      background: #34a853;
+      background: #22c55e;
       
       &:hover {
-        background: #2d9444;
+        background: #16a34a;
       }
     }
     
     &.invalid {
-      background: #ea4335;
+      background: #ef4444;
       
       &:hover {
-        background: #d33b2c;
+        background: #dc2626;
       }
     }
   }
@@ -181,18 +201,14 @@ $recaptcha-shadow: rgba(0, 0, 0, 0.12);
 @media (max-width: 480px) {
   .recaptcha-container {
     .recaptcha-header {
-      padding: 12px;
+      padding: 16px;
       
       .recaptcha-title-prefix {
         font-size: 13px;
-        
-        .underline {
-          text-decoration: underline;
-        }
       }
       
       .recaptcha-title-highlight {
-        font-size: 15px;
+        font-size: 20px;
       }
       
       .recaptcha-subtitle {
@@ -201,21 +217,21 @@ $recaptcha-shadow: rgba(0, 0, 0, 0.12);
     }
     
     .recaptcha-toolbar {
-      padding: 10px 12px;
+      padding: 12px;
       
       .recaptcha-icon-btn {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
         
         svg {
-          width: 14px;
-          height: 14px;
+          width: 18px;
+          height: 18px;
         }
       }
       
       .recaptcha-skip-btn {
-        padding: 6px 12px;
-        font-size: 11px;
+        padding: 8px 20px;
+        font-size: 12px;
       }
     }
   }

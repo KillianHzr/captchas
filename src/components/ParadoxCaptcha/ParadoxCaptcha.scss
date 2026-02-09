@@ -50,50 +50,7 @@
   }
 }
 
-// Alerte de résultat
-.result-alert {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 9999;
-  user-select: none;
-  
-  animation: slideInOut 3s ease-in-out forwards;
-  
-  &.correct {
-    background: #34a853;
-  }
-  
-  &.incorrect {
-    background: #ea4335;
-  }
-}
 
-@keyframes slideInOut {
-  0% {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  10% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  90% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-}
 
 // Styles pour la modal d'indice
 .paradox-hint {
