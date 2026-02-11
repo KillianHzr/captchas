@@ -136,7 +136,6 @@
   padding: 8px 24px;
   margin-bottom: 32px;
   transform: rotate(1deg);
-  box-shadow: 4px 4px 0px #000;
 }
 
 .best-score-badge .label {
@@ -406,6 +405,5 @@
   }
   .intro-content {
     padding: 30px;
-    box-shadow: 8px 8px 0px #000;
   }
 }
