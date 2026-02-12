@@ -11,8 +11,8 @@ import './App.css'
 
 // Ordre des captchas du moins étrange au plus étrange
 const CAPTCHA_ORDER = [
-  { id: 'hangman', name: 'Hangman', Component: HangmanCaptcha, difficulty: 1 },
-  { id: 'wordle', name: 'Wordle', Component: WordleCaptcha, difficulty: 2 },
+  { id: 'wordle', name: 'Wordle', Component: WordleCaptcha, difficulty: 1 },
+  { id: 'hangman', name: 'Hangman', Component: HangmanCaptcha, difficulty: 2 },
   { id: 'card', name: 'Card Game', Component: CardGameCaptcha, difficulty: 3 },
   { id: 'morse', name: 'Morse Code', Component: MorseCaptcha, difficulty: 4 },
   { id: 'patience', name: 'Patience', Component: PatienceCaptcha, difficulty: 5 },
